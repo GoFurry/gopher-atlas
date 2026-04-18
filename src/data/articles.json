@@ -140,6 +140,7 @@
     "id": "green-tea-gc",
     "title": "Go 的新垃圾回收器 Green Tea：一个降低 GC CPU 开销的大工程",
     "url": "https://mp.weixin.qq.com/s/gMKcuew3-CDLQGD1Zz80CA",
+    "originalUrl": "https://go.dev/blog/greenteagc",
     "links": [
       { "label": "原文", "url": "https://go.dev/blog/greenteagc" },
       { "label": "Green Tea GitHub Issue", "url": "https://github.com/golang/go/issues/73581" },
@@ -164,6 +165,7 @@
     "id": "allocation-optimizations",
     "title": "Go 编译器偷偷帮你做的那些内存优化",
     "url": "https://mp.weixin.qq.com/s/hUXv_yMbuBB0dDsUq_jORQ",
+    "originalUrl": "https://go.dev/blog/allocation-optimizations",
     "links": [
       { "label": "原文", "url": "https://go.dev/blog/allocation-optimizations" },
       { "label": "Go 逃逸分析指南", "url": "https://go.dev/doc/gc-guide#Escape_analysis" }

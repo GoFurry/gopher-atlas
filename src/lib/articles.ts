@@ -20,6 +20,7 @@ export const articleSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   url: z.string().url(),
+  originalUrl: z.string().url().optional(),
   links: z.array(articleLinkSchema).min(1).optional(),
   author: z.string().min(1).optional(),
   source: z.string().min(1).optional(),

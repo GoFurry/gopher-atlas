@@ -122,6 +122,7 @@ export function renderArticleCard(article: ArticleItem): string {
         </div>
         <div class="flex flex-wrap gap-3">
           <a class="${BUTTON_RECT_PRIMARY_CLASS}" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">\u9605\u8bfb\u5168\u6587</a>
+          ${article.originalUrl ? `<a class="${BUTTON_RECT_GHOST_CLASS}" href="${escapeHtml(article.originalUrl)}" target="_blank" rel="noreferrer">\u53c2\u8003\u6587\u732e</a>` : ''}
           <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-text="${escapeHtml(article.url)}">\u590d\u5236\u539f\u6587\u94fe\u63a5</button>
         </div>
         ${article.links?.length ? renderArticleLinkList(article.links) : ''}
