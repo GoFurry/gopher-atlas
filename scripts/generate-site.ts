@@ -436,7 +436,7 @@ function renderHomePage(): string {
             <span class="inline-flex items-center gap-2 font-mono text-[0.9rem] tracking-[0.12em] text-[color:var(--text-muted)] opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:80ms] md:text-[1rem]">Golang or go home?</span>
             <div class="space-y-6 opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:180ms]">
               <h1 class="home-wordmark text-[clamp(3.3rem,8.5vw,8.05rem)] leading-[0.97] text-[color:var(--text)]">${SITE_NAME}</h1>
-              <p class="max-w-2xl text-[1rem] leading-8 text-[color:var(--text-soft)] md:text-[1.05rem] md:leading-9">精选高质量 Go 技术文章，按专题、标签与评级整理，帮助开发者更快找到值得阅读的内容。</p>
+              <p class="max-w-2xl text-[1rem] leading-8 text-[color:var(--text-soft)] md:text-[1.05rem] md:leading-9">精选高质量 Go 技术文章，按专题、标签与评级整理，帮助开发者更快找到真正值得反复阅读的内容。</p>
             </div>
             <div class="flex flex-wrap gap-3">
               <a class="${HOME_BUTTON_PRIMARY_CLASS} opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:300ms]" href="/articles/">\u6d4f\u89c8\u5168\u90e8\u6587\u7ae0</a>
