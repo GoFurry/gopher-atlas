@@ -8,7 +8,7 @@ describe('articles data and list helpers', () => {
   it('validates seed articles and derives categories/tags', () => {
     const stats = getArticleStats(articles)
 
-    expect(articles.length).toBe(3)
+    expect(articles.length).toBeGreaterThanOrEqual(3)
     expect(stats.categories).toContain('Go New Features')
     expect(stats.categories).toContain('Benchmarking & Comparisons')
     expect(stats.tags).toContain('gc')

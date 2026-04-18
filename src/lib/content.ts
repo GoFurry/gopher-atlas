@@ -10,7 +10,6 @@ export type TopicDocument = {
   slug: string
   summary: string
   readingOrder: string[]
-  relatedTopics: string[]
   body: string
 }
 
@@ -40,7 +39,6 @@ export async function loadTopicDocuments(rootDir: string): Promise<TopicDocument
       slug: String(data.slug),
       summary: String(data.summary),
       readingOrder: Array.isArray(data.readingOrder) ? data.readingOrder.map(String) : [],
-      relatedTopics: Array.isArray(data.relatedTopics) ? data.relatedTopics.map(String) : [],
       body: await marked.parse(content)
     } satisfies TopicDocument
   }))

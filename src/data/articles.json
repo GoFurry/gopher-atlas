@@ -75,5 +75,109 @@
     ],
     "featured": true,
     "mustRead": true
+  },
+  {
+    "id": "grpc-vs-rest-vs-graphql-performance-comparison",
+    "title": "gRPC vs REST vs GraphQL：对比与性能测试",
+    "url": "https://mp.weixin.qq.com/s/KQolzFy3phAtzfwBkYaKFw",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-10",
+    "addedAt": "2026-04-18",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "grpc", "rest", "graphql", "api", "kubernetes"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 REST、GraphQL 和 gRPC 的实测对比，展示它们在 Kubernetes 环境下的吞吐、延迟、CPU、内存与网络开销差异。",
+    "reason": "这篇文章很适合作为 API 协议对比的入门读物，因为它不只给出谁更快的结论，还把不同协议在高负载下的稳定性、网络成本和适用场景讲清楚了，便于建立更贴近生产环境的性能判断。",
+    "originalUrl": "https://www.youtube.com/watch?v=uH0SxYdsjv4",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=uH0SxYdsjv4"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "mysql-vs-postgresql-performance-benchmark",
+    "title": "MySQL vs PostgreSQL 数据库性能对比",
+    "url": "https://mp.weixin.qq.com/s/EwiCeKvXM9kJJB1UQN2_rw",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-07",
+    "addedAt": "2026-04-18",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "mysql", "postgresql", "database", "latency", "throughput", "saturation"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 MySQL 与 PostgreSQL 的写入和读取实测，对比它们在延迟、吞吐、CPU、内存、磁盘操作与连接池方面的差异。",
+    "reason": "这篇文章适合作为数据库性能对比的入门材料，因为它把写入、读取、资源占用和存储效率放在同一套测试框架下观察，能帮助读者建立对数据库性能瓶颈和实际取舍的整体认知。",
+    "originalUrl": "https://www.youtube.com/watch?v=R7jBtnrUmYI",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=R7jBtnrUmYI"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "kafka-vs-rabbitmq-performance",
+    "title": "Kafka vs RabbitMQ 性能对比",
+    "url": "https://mp.weixin.qq.com/s/Q6JIU_KyIuCsB2t5-nQs_A",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-03-26",
+    "addedAt": "2026-04-18",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "kafka", "rabbitmq", "rabbitmq-streams", "messaging", "latency", "throughput"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Kafka、传统 RabbitMQ 与 RabbitMQ Streams 的实测，对比它们在吞吐、延迟、CPU、内存、磁盘操作与客户端负载上的差异。",
+    "reason": "这篇文章适合作为消息队列性能对比的入门材料，因为它不仅给出吞吐和延迟结果，还把磁盘写入、客户端 CPU 与不同队列模型的取舍放到同一套测试框架下观察，便于理解低延迟与高吞吐之间的真实权衡。",
+    "originalUrl": "https://www.youtube.com/watch?v=UPkOsXKG4ns",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=UPkOsXKG4ns"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/218"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "redis-vs-memcached-performance-benchmark",
+    "title": "Redis vs Memcached 性能对比",
+    "url": "https://mp.weixin.qq.com/s/nEkd6w4zVctnEwxfz5P8ZQ",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-11",
+    "addedAt": "2026-04-18",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "redis", "memcached", "cache", "latency", "throughput", "saturation"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Redis 与 Memcached 的实测，对比它们在 set/get 延迟、吞吐、CPU、内存与网络开销上的差异。",
+    "reason": "这篇文章适合作为缓存性能对比的入门材料，因为它没有停留在“谁更快”这种单一结论上，而是把延迟、吞吐和运维复杂度放在一起讨论，能帮助读者更实际地判断 Redis 与 Memcached 的适用边界。",
+    "originalUrl": "https://www.youtube.com/watch?v=hPRqxKVnpw8&t=1s",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=hPRqxKVnpw8&t=1s"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
   }
 ]

@@ -4,10 +4,10 @@ slug: benchmarking-and-comparisons
 summary: 聚焦 Go 生态中的基准测试、框架对比与性能跑分，帮助读者理解吞吐、延迟、资源占用与测试方法之间的真实关系。
 readingOrder:
   - go-framework-benchmark-gnet-vs-fiber-vs-fasthttp-vs-net-http
-relatedTopics:
-  - web-development
-  - performance
-  - testing
+  - grpc-vs-rest-vs-graphql-performance-comparison
+  - mysql-vs-postgresql-performance-benchmark
+  - redis-vs-memcached-performance-benchmark
+  - kafka-vs-rabbitmq-performance
 ---
 
 性能对比文章的价值，不只在于“谁更快”，更在于它们能提供一种观察系统行为的方法：在不同负载、不同瓶颈和不同部署环境下，吞吐、延迟、CPU、内存与错误率会如何变化。

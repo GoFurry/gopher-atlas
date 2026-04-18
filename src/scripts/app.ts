@@ -154,6 +154,52 @@ function initBackToTop() {
   })
 }
 
+function initTopicReadingOrder() {
+  const root = document.querySelector<HTMLElement>('[data-reading-order]')
+  if (!root) {
+    return
+  }
+
+  const items = [...root.querySelectorAll<HTMLElement>('[data-reading-order-item]')]
+  const prevButton = root.querySelector<HTMLButtonElement>('[data-reading-order-prev]')
+  const nextButton = root.querySelector<HTMLButtonElement>('[data-reading-order-next]')
+  const pageLabel = root.querySelector<HTMLElement>('[data-reading-order-page]')
+  const pageSize = Number.parseInt(root.dataset.pageSize ?? '3', 10)
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize))
+  let currentPage = 1
+
+  const renderPage = () => {
+    const start = (currentPage - 1) * pageSize
+    const end = start + pageSize
+
+    items.forEach((item, index) => {
+      item.hidden = index < start || index >= end
+    })
+
+    if (pageLabel) {
+      pageLabel.textContent = `${currentPage} / ${totalPages}`
+    }
+    if (prevButton) {
+      prevButton.disabled = currentPage === 1
+    }
+    if (nextButton) {
+      nextButton.disabled = currentPage === totalPages
+    }
+  }
+
+  prevButton?.addEventListener('click', () => {
+    currentPage = Math.max(1, currentPage - 1)
+    renderPage()
+  })
+
+  nextButton?.addEventListener('click', () => {
+    currentPage = Math.min(totalPages, currentPage + 1)
+    renderPage()
+  })
+
+  renderPage()
+}
+
 function readArticlesPageData(): ArticlesPageData | null {
   const script = document.getElementById('page-data')
   if (!script?.textContent) {
@@ -485,4 +531,5 @@ initThemeToggle()
 initMobileMenu()
 initClipboardActions()
 initBackToTop()
+initTopicReadingOrder()
 initArticlesExplorer()

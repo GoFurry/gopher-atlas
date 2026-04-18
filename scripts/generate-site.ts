@@ -29,7 +29,9 @@ import {
   SUBTLE_PANEL_CLASS
 } from '../src/lib/render'
 import {
+  DIFFICULTY_LABELS,
   GITHUB_URL,
+  LANGUAGE_LABELS,
   PAGE_SIZE,
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -530,6 +532,12 @@ function renderArticlesPage(articles: ArticleItem[]) {
 
 function renderTopicPage(topic: TopicViewModel) {
   const sortedTopicArticles = sortArticles(topic.articles, 'recommended')
+  const readingOrderPageSize = 2
+  const readingOrderArticles = topic.readingOrder
+    .map((articleId) => topic.articles.find((article) => article.id === articleId))
+    .filter((article): article is ArticleItem => Boolean(article))
+  const hasReadingOrder = readingOrderArticles.length > 0
+  const readingOrderTotalPages = Math.max(1, Math.ceil(readingOrderArticles.length / readingOrderPageSize))
 
   return renderShell(
     {
@@ -546,13 +554,51 @@ function renderTopicPage(topic: TopicViewModel) {
           `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/?category=${encodeURIComponent(topic.articles[0]?.category ?? topic.title)}">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
            <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u4e13\u9898\u94fe\u63a5</button>`
         )}
-        <section>
-          <article class="${PANEL_CLASS} markdown-body px-6 py-6 md:px-8 md:py-8">
-            <span class="block text-[0.92rem] font-medium tracking-[0.08em] text-[color:var(--text-soft)]">\u4e13\u9898\u5bfc\u8bfb</span>
-            <div class="mt-5">
+        <section class="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.78fr)]">
+          <article class="${PANEL_CLASS} px-6 py-6 md:px-8 md:py-8">
+            <div class="space-y-4">
+              <div class="flex h-10 items-center">
+                <h2 class="min-w-0 text-[1rem] font-medium leading-6 tracking-[0.01em] text-[color:var(--text)] md:text-[1.05rem]">\u4e13\u9898\u5bfc\u8bfb</h2>
+              </div>
+              <div class="border-b border-[color:var(--line)]"></div>
+            </div>
+            <div class="markdown-body mt-5">
               ${topic.body}
             </div>
           </article>
+          ${hasReadingOrder ? `
+          <aside class="${PANEL_CLASS} px-6 py-6 md:px-8 md:py-8" data-reading-order data-page-size="${readingOrderPageSize}">
+            <div class="space-y-4">
+              <div class="flex h-10 items-center justify-between gap-3">
+                <h2 class="min-w-0 text-[1rem] font-medium leading-6 tracking-[0.01em] text-[color:var(--text)] md:text-[1.05rem]">\u63a8\u8350\u9605\u8bfb - \u5171 ${readingOrderArticles.length} \u7bc7</h2>
+                ${readingOrderArticles.length > 3 ? `
+                <div class="flex shrink-0 items-center gap-2" data-reading-order-controls>
+                  <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-40" type="button" data-reading-order-prev>\u4e0a\u4e00\u9875</button>
+                  <span class="min-w-12 text-center text-xs tracking-[0.08em] text-[color:var(--text-muted)]" data-reading-order-page>1 / ${readingOrderTotalPages}</span>
+                  <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-40" type="button" data-reading-order-next>\u4e0b\u4e00\u9875</button>
+                </div>
+                ` : ''}
+              </div>
+              <div class="border-b border-[color:var(--line)]"></div>
+            </div>
+            <div class="mt-5 space-y-2.5">
+              ${readingOrderArticles.map((article, index) => `
+              <a class="group flex items-start rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3 transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)]" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer" data-reading-order-item data-reading-order-index="${index}" ${index >= readingOrderPageSize ? 'hidden' : ''}>
+                <span class="min-w-0 space-y-1">
+                  <span class="block text-sm font-medium leading-6 text-[color:var(--text)] transition duration-500 group-hover:text-[color:var(--accent-strong)]">${escapeHtml(article.title)}</span>
+                  <span class="block text-xs leading-5 text-[color:var(--text-muted)]">${escapeHtml([
+                    `${article.rating}\u8bc4\u7ea7`,
+                    LANGUAGE_LABELS[article.language],
+                    DIFFICULTY_LABELS[article.difficulty],
+                    article.author || '\u4f5c\u8005\u672a\u6ce8\u660e',
+                    article.source || '\u53d1\u5e03\u6e90\u672a\u6ce8\u660e'
+                  ].join(' \u00b7 '))}</span>
+                </span>
+              </a>
+              `).join('')}
+            </div>
+          </aside>
+          ` : ''}
         </section>
         <section class="space-y-6">
           <div class="space-y-3">
