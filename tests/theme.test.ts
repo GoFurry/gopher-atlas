@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { applyTheme, readStoredTheme, resolveTheme, storeTheme, toggleTheme } from '../src/scripts/theme'
 
 describe('theme helpers', () => {
-  it('uses stored theme first and otherwise falls back to system preference', () => {
+  it('uses stored theme first and otherwise defaults to dark mode', () => {
     expect(resolveTheme('dark', true)).toBe('dark')
-    expect(resolveTheme(null, true)).toBe('light')
+    expect(resolveTheme(null, true)).toBe('dark')
     expect(resolveTheme(null, false)).toBe('dark')
   })
 

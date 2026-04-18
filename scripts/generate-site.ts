@@ -24,7 +24,6 @@ import {
   renderArticleGrid,
   renderPagination,
   renderStat,
-  renderTagLinks,
   SECTION_EYEBROW_CLASS,
   SUBTLE_PANEL_CLASS
 } from '../src/lib/render'
@@ -108,7 +107,7 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
   const floatingUi = isHome
     ? ''
     : `
-    <button class="pointer-events-none fixed right-4 bottom-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--panel)] px-4 text-sm text-[color:var(--text-soft)] opacity-0 shadow-[var(--shadow-soft)] transition duration-200 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] md:right-6 md:bottom-6" type="button" aria-label="&#x8FD4;&#x56DE;&#x9876;&#x90E8;" data-back-to-top>&#x8FD4;&#x56DE;&#x9876;&#x90E8;</button>
+    <button class="pointer-events-none fixed right-4 bottom-4 z-40 inline-flex min-h-11 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 text-sm text-[color:var(--text-soft)] opacity-0 shadow-[var(--shadow-soft)] transition duration-500 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] md:right-6 md:bottom-6" type="button" aria-label="&#x8FD4;&#x56DE;&#x9876;&#x90E8;" data-back-to-top>&#x8FD4;&#x56DE;&#x9876;&#x90E8;</button>
     <div class="pointer-events-none fixed top-3 left-1/2 z-40 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-3 text-center text-sm text-[color:var(--text)] opacity-0 shadow-[var(--shadow-soft)] transition duration-300 md:top-4" aria-live="polite" data-toast></div>`
 
   return `<!doctype html>
@@ -154,8 +153,7 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
       (() => {
         const key = 'gopheratlas-theme';
         const stored = localStorage.getItem(key);
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        document.documentElement.dataset.theme = stored || (prefersLight ? 'light' : 'dark');
+        document.documentElement.dataset.theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
       })();
     </script>
     <link rel="stylesheet" href="/src/styles/main.css" />
@@ -176,8 +174,8 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
 function renderHeader(pathname: string): string {
   const links = [
     { href: '/', label: '\u9996\u9875' },
-    { href: '/articles/', label: '\u5168\u90e8\u6587\u7ae0' },
-    { href: '/topics/', label: '\u8bdd\u9898\u4e13\u533a' }
+    { href: '/articles/', label: '\u5168\u90e8\u6587\u7ae0', mobileLabel: '\u6587\u7ae0' },
+    { href: '/topics/', label: '\u8bdd\u9898\u4e13\u533a', mobileLabel: '\u8bdd\u9898' }
   ]
 
   const navLinks = links.map((link) => {
@@ -187,9 +185,12 @@ function renderHeader(pathname: string): string {
     const stateClass = isActive
       ? 'text-[color:var(--text)] after:bg-[color:var(--accent-strong)]'
       : 'text-[color:var(--text-soft)] after:bg-transparent hover:text-[color:var(--text)] hover:after:bg-[color:var(--line-strong)]'
+    const mobileLabel = link.mobileLabel ?? link.label
 
-    return `<a class="relative inline-flex min-h-10 items-center py-2 text-sm transition duration-500 after:absolute after:right-0 after:bottom-0 after:left-0 after:hidden after:h-px after:transition-colors after:duration-500 after:content-[''] md:min-h-[72px] md:px-1 md:py-0 md:after:block ${stateClass}" href="${link.href}">${link.label}</a>`
+    return `<a class="relative inline-flex min-h-10 shrink-0 items-center justify-center py-2 text-sm whitespace-nowrap transition duration-500 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:transition-colors after:duration-500 after:content-[''] md:min-h-[72px] md:px-1 md:py-0 ${stateClass}" href="${link.href}"><span class="md:hidden">${mobileLabel}</span><span class="hidden md:inline">${link.label}</span></a>`
   }).join('')
+
+  const navIconClass = 'inline-flex h-11 w-11 shrink-0 items-center justify-center text-[color:var(--text-soft)] transition duration-500 hover:text-[color:var(--text)]'
 
   return `
     <header class="shrink-0 border-b border-[color:var(--line)]">
@@ -201,16 +202,16 @@ function renderHeader(pathname: string): string {
             <small class="hidden truncate text-[0.74rem] tracking-[0.08em] text-[color:var(--text-muted)] md:block">高质量 Go 技术文章精选导航</small>
           </span>
         </a>
-        <button class="inline-flex min-h-10 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] md:hidden" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] md:hidden" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
           \u83dc\u5355
         </button>
-        <nav class="hidden gap-3 ${PANEL_CLASS} absolute top-[calc(100%+0.75rem)] right-0 left-0 z-20 p-4 md:static md:flex md:items-center md:gap-6 md:border-0 md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-none" id="primary-navigation" data-site-nav>
+        <nav class="hidden items-center justify-center gap-5 overflow-x-auto whitespace-nowrap ${PANEL_CLASS} absolute top-[calc(100%+0.75rem)] right-0 left-0 z-20 px-4 py-3 text-center md:static md:flex md:items-center md:gap-6 md:overflow-visible md:border-0 md:bg-transparent md:p-0 md:text-left md:shadow-none md:backdrop-blur-none" id="primary-navigation" data-site-nav>
           ${navLinks}
-          <a class="inline-flex h-11 w-11 items-center justify-center text-[color:var(--text-soft)] transition duration-500 hover:text-[color:var(--text)] hover:[filter:drop-shadow(0_0_16px_color-mix(in_srgb,var(--accent-glow)_42%,transparent))] md:ml-2" href="${GITHUB_URL}" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <a class="${navIconClass} md:ml-2 md:hover:[filter:drop-shadow(0_0_16px_color-mix(in_srgb,var(--accent-glow)_42%,transparent))]" href="${GITHUB_URL}" target="_blank" rel="noreferrer" aria-label="GitHub">
             <img class="h-10 w-10 dark:hidden" src="${GITHUB_ICON_DARK_SRC}" alt="" />
             <img class="hidden h-10 w-10 dark:block" src="${GITHUB_ICON_LIGHT_SRC}" alt="" />
           </a>
-          <button class="inline-flex h-11 w-11 items-center justify-center text-[color:var(--text-soft)] transition duration-500 hover:text-[color:var(--text)] hover:[filter:drop-shadow(0_0_14px_color-mix(in_srgb,var(--accent-glow)_34%,transparent))]" type="button" data-theme-toggle aria-label="\u5207\u6362\u4e3b\u9898" title="\u5207\u6362\u4e3b\u9898">
+          <button class="${navIconClass} md:hover:[filter:drop-shadow(0_0_14px_color-mix(in_srgb,var(--accent-glow)_34%,transparent))]" type="button" data-theme-toggle aria-label="\u5207\u6362\u4e3b\u9898" title="\u5207\u6362\u4e3b\u9898">
             <img class="h-5 w-5 dark:hidden" src="${THEME_ICON_MOON_SRC}" alt="" />
             <img class="hidden h-5 w-5 dark:block" src="${THEME_ICON_SUN_SRC}" alt="" />
           </button>
@@ -507,7 +508,7 @@ function renderArticlesPage(articles: ArticleItem[]) {
         ${renderFilterPanel(stats.categories, groupTagsByCount(articles))}
         <section class="space-y-6" data-results-section>
           <div class="flex flex-col gap-4 border-b border-[color:var(--line)] pb-5 md:flex-row md:items-end md:justify-between">
-            <p class="text-base text-[color:var(--text-soft)]">\u5f53\u524d\u5171\u6709 <strong class="font-semibold text-[color:var(--text)]" data-result-count>${sorted.length}</strong> \u7bc7\u547d\u4e2d</p>
+            <p class="text-base text-[color:var(--text-soft)]">\u5df2\u627e\u5230 <strong class="font-semibold text-[color:var(--text)]" data-result-count>${sorted.length}</strong> \u7bc7\u6587\u7ae0</p>
             <a class="${BUTTON_RECT_GHOST_CLASS}" href="/">\u8fd4\u56de\u9996\u9875</a>
           </div>
           <div data-article-results>
@@ -527,9 +528,8 @@ function renderArticlesPage(articles: ArticleItem[]) {
   )
 }
 
-function renderTopicPage(topic: TopicViewModel, allTopics: TopicViewModel[]) {
+function renderTopicPage(topic: TopicViewModel) {
   const sortedTopicArticles = sortArticles(topic.articles, 'recommended')
-  const relatedTopics = topic.relatedTopics.map((slug) => allTopics.find((item) => item.slug === slug)).filter(Boolean) as TopicViewModel[]
 
   return renderShell(
     {
@@ -560,18 +560,6 @@ function renderTopicPage(topic: TopicViewModel, allTopics: TopicViewModel[]) {
             <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.04] tracking-[-0.04em] text-[color:var(--text)]">${topic.articles.length} \u7bc7\u7cbe\u9009\u6587\u7ae0</h2>
           </div>
           ${renderArticleGrid(sortedTopicArticles, '\u5f53\u524d\u4e13\u9898\u6682\u65e0\u6587\u7ae0\u3002')}
-        </section>
-        <section class="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">\u6807\u7b7e\u805a\u5408</span>
-            ${renderTagLinks(groupTagsByCount(topic.articles), 18)}
-          </article>
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">\u76f8\u5173\u4e13\u9898</span>
-            <div class="grid gap-3 text-base text-[color:var(--text-soft)]">
-              ${relatedTopics.map((item) => `<a class="transition hover:text-[color:var(--accent-strong)]" href="/topics/${item.slug}/">${escapeHtml(item.title)}</a>`).join('') || '<span>\u5f53\u524d\u6682\u65e0\u76f8\u5173\u4e13\u9898\u3002</span>'}
-            </div>
-          </article>
         </section>
       </div>
     `,
@@ -676,7 +664,7 @@ async function main() {
 
   for (const topic of topicPages) {
     allRoutes.push(`/topics/${topic.slug}/`)
-    await writePage(`topics/${topic.slug}/index.html`, renderTopicPage(topic, topicPages))
+    await writePage(`topics/${topic.slug}/index.html`, renderTopicPage(topic))
   }
 
   for (const tag of tagGroups) {

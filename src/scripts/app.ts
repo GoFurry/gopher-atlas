@@ -68,20 +68,25 @@ function initMobileMenu() {
     return
   }
 
+  const setMenuOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open))
+    nav.classList.toggle('hidden', !open)
+    nav.classList.toggle('flex', open && window.innerWidth < 768)
+  }
+
   const closeMenu = () => {
-    toggle.setAttribute('aria-expanded', 'false')
-    nav.classList.add('hidden')
+    setMenuOpen(false)
   }
 
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true'
-    toggle.setAttribute('aria-expanded', String(!expanded))
-    nav.classList.toggle('hidden', expanded)
+    setMenuOpen(!expanded)
   })
 
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {
-      nav.classList.remove('hidden')
+      toggle.setAttribute('aria-expanded', 'false')
+      nav.classList.remove('hidden', 'flex')
       return
     }
 
@@ -99,8 +104,17 @@ function initMobileMenu() {
     }
   })
 
+  nav.addEventListener('click', (event) => {
+    const target = event.target instanceof HTMLElement ? event.target.closest<HTMLElement>('a, button') : null
+    if (!target || window.innerWidth >= 768) {
+      return
+    }
+
+    closeMenu()
+  })
+
   if (window.innerWidth >= 768) {
-    nav.classList.remove('hidden')
+    nav.classList.remove('hidden', 'flex')
   }
 }
 

@@ -7,7 +7,7 @@ export function resolveTheme(storedTheme: string | null, prefersLight: boolean):
     return storedTheme
   }
 
-  return prefersLight ? 'light' : 'dark'
+  return 'dark'
 }
 
 export function applyTheme(theme: ThemeMode, documentRef: Document = document): void {
