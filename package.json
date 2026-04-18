@@ -11,10 +11,12 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^25.6.0",
     "gray-matter": "^4.0.3",
     "jsdom": "^29.0.2",
     "marked": "^18.0.1",
+    "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.8",

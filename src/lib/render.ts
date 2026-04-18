@@ -5,8 +5,17 @@ import {
   PAGE_SIZE,
   TOPIC_CATEGORY_SLUGS,
   formatDate,
-  slugify
+  slugify,
+  type Rating
 } from './site'
+
+export const PAGE_SHELL_CLASS = 'mx-auto w-[min(1160px,calc(100vw-1.5rem))] md:w-[min(1440px,calc(100vw-3rem))]'
+export const SECTION_EYEBROW_CLASS = 'inline-flex items-center gap-2 text-[0.68rem] font-mono uppercase tracking-[0.24em] text-[color:var(--text-muted)]'
+export const BUTTON_BASE_CLASS = 'inline-flex min-h-11 items-center justify-center rounded-full border px-5 text-sm transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+export const BUTTON_PRIMARY_CLASS = `${BUTTON_BASE_CLASS} border-[color:var(--line-strong)] bg-[color:var(--button-strong)] text-[color:var(--button-strong-text)] hover:-translate-y-0.5 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--button-strong-hover)]`
+export const BUTTON_GHOST_CLASS = `${BUTTON_BASE_CLASS} border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-soft)] hover:-translate-y-0.5 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]`
+export const PANEL_CLASS = 'rounded-[22px] border border-[color:var(--line)] bg-[color:var(--panel)] shadow-[var(--shadow-soft)] backdrop-blur-xl'
+export const SUBTLE_PANEL_CLASS = 'rounded-[18px] border border-[color:var(--line)] bg-[color:var(--panel-soft)] shadow-none backdrop-blur-xl'
 
 export function escapeHtml(input: string): string {
   return input
@@ -38,34 +47,57 @@ export function buildTagHref(tag: string): string {
   return `/tags/${slugify(tag)}/`
 }
 
+function getRatingBadgeClass(rating: Rating): string {
+  const base = 'inline-flex min-w-11 items-center justify-center rounded-full border px-3 py-1 text-[0.7rem] font-mono tracking-[0.18em] text-white/90'
+
+  switch (rating) {
+    case 'S+':
+      return `${base} border-emerald-300/30 bg-emerald-400/18 text-emerald-100`
+    case 'S':
+      return `${base} border-teal-300/28 bg-teal-400/15 text-teal-100`
+    case 'A+':
+      return `${base} border-sky-300/28 bg-sky-400/14 text-sky-100`
+    case 'A':
+      return `${base} border-stone-300/28 bg-stone-300/12 text-[color:var(--text)]`
+    case 'B+':
+      return `${base} border-amber-300/30 bg-amber-400/14 text-amber-100`
+    case 'B':
+      return `${base} border-zinc-300/22 bg-zinc-400/10 text-[color:var(--text-soft)]`
+    default:
+      return `${base} border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-soft)]`
+  }
+}
+
 export function renderArticleCard(article: ArticleItem): string {
   const authorLine = [article.author, article.source].filter(Boolean).join(' · ')
   const publishedLine = article.publishedAt ? `原文发布于 ${escapeHtml(formatDate(article.publishedAt))}` : '原文发布日期未注明'
 
   return `
-    <article class="article-card glass-card">
-      <div class="article-card__header">
-        <div class="article-card__eyebrow">
-          <a class="article-card__category" href="${buildTopicHref(article.category)}">${escapeHtml(article.category)}</a>
-          <span class="rating-badge rating-badge--${article.rating.toLowerCase().replace('+', 'plus')}">${escapeHtml(article.rating)}</span>
+    <article class="border-t border-[color:var(--line)] pt-8 first:pt-0">
+      <div class="space-y-5">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <a class="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-1 text-[0.68rem] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)] transition hover:border-[color:var(--line-strong)] hover:text-[color:var(--accent-strong)]" href="${buildTopicHref(article.category)}">${escapeHtml(article.category)}</a>
+          <span class="${getRatingBadgeClass(article.rating)}">${escapeHtml(article.rating)}</span>
         </div>
-        <h3 class="article-card__title">
-          <a href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">${escapeHtml(article.title)}</a>
-        </h3>
-        <p class="article-card__summary">${escapeHtml(article.summary)}</p>
-      </div>
-      <div class="article-card__meta">
-        <span>${escapeHtml(authorLine || '作者/来源未注明')}</span>
-        <span>${escapeHtml(publishedLine)}</span>
-        <span>${escapeHtml(LANGUAGE_LABELS[article.language])} · ${escapeHtml(DIFFICULTY_LABELS[article.difficulty])}</span>
-      </div>
-      <p class="article-card__reason"><strong>收录理由：</strong>${escapeHtml(article.reason)}</p>
-      <div class="tag-row">
-        ${article.tags.map((tag) => `<a class="tag-pill" href="${buildTagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
-      </div>
-      <div class="article-card__actions">
-        <a class="button button--primary" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">阅读全文</a>
-        <button class="button button--ghost" type="button" data-copy-text="${escapeHtml(article.url)}">复制原文链接</button>
+        <div class="space-y-3">
+          <h3 class="max-w-4xl font-display text-[clamp(1.7rem,2.5vw,2.25rem)] leading-[1.06] tracking-[-0.03em] text-[color:var(--text)]">
+            <a class="transition hover:text-[color:var(--accent-strong)]" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">${escapeHtml(article.title)}</a>
+          </h3>
+          <p class="max-w-3xl text-base leading-8 text-[color:var(--text-soft)]">${escapeHtml(article.summary)}</p>
+        </div>
+        <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[color:var(--text-muted)]">
+          <span>${escapeHtml(authorLine || '作者 / 来源未注明')}</span>
+          <span>${escapeHtml(publishedLine)}</span>
+          <span>${escapeHtml(LANGUAGE_LABELS[article.language])} · ${escapeHtml(DIFFICULTY_LABELS[article.difficulty])}</span>
+        </div>
+        <p class="max-w-4xl text-base leading-8 text-[color:var(--text-soft)]"><strong class="font-semibold text-[color:var(--text)]">收录理由：</strong>${escapeHtml(article.reason)}</p>
+        <div class="flex flex-wrap gap-2.5">
+          ${article.tags.map((tag) => `<a class="inline-flex items-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-2 text-sm text-[color:var(--text-soft)] transition hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]" href="${buildTagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a class="${BUTTON_PRIMARY_CLASS}" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">阅读全文</a>
+          <button class="${BUTTON_GHOST_CLASS}" type="button" data-copy-text="${escapeHtml(article.url)}">复制原文链接</button>
+        </div>
       </div>
     </article>
   `
@@ -73,10 +105,10 @@ export function renderArticleCard(article: ArticleItem): string {
 
 export function renderArticleGrid(items: ArticleItem[], emptyMessage: string): string {
   if (items.length === 0) {
-    return `<div class="empty-state glass-card"><p>${escapeHtml(emptyMessage)}</p></div>`
+    return `<div class="${SUBTLE_PANEL_CLASS} px-6 py-8 text-base leading-8 text-[color:var(--text-soft)]"><p>${escapeHtml(emptyMessage)}</p></div>`
   }
 
-  return `<div class="article-grid">${items.map((item) => renderArticleCard(item)).join('')}</div>`
+  return `<div class="space-y-10">${items.map((item) => renderArticleCard(item)).join('')}</div>`
 }
 
 export function renderPagination(currentPage: number, totalPages: number, state: ArticleSearchState): string {
@@ -87,10 +119,14 @@ export function renderPagination(currentPage: number, totalPages: number, state:
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1)
 
   return `
-    <nav class="pagination" aria-label="文章分页">
+    <nav class="mt-10 flex flex-wrap justify-center gap-2" aria-label="文章分页">
       ${pages.map((page) => {
         const href = `/articles/${stringifySearchState({ ...state, page })}`
-        return `<a class="pagination__item${page === currentPage ? ' is-active' : ''}" href="${href}" data-page-link="${page}">${page}</a>`
+        const classes = page === currentPage
+          ? 'border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] text-[color:var(--text)]'
+          : 'border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-soft)] hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]'
+
+        return `<a class="inline-flex min-w-10 items-center justify-center rounded-full border px-3 py-2 text-sm transition ${classes}" href="${href}" data-page-link="${page}">${page}</a>`
       }).join('')}
     </nav>
   `
@@ -98,17 +134,17 @@ export function renderPagination(currentPage: number, totalPages: number, state:
 
 export function renderStat(label: string, value: number | string): string {
   return `
-    <div class="stat-card glass-card">
-      <span class="stat-card__value">${escapeHtml(String(value))}</span>
-      <span class="stat-card__label">${escapeHtml(label)}</span>
+    <div class="${SUBTLE_PANEL_CLASS} px-5 py-5">
+      <span class="block font-display text-2xl leading-none tracking-[-0.03em] text-[color:var(--text)]">${escapeHtml(String(value))}</span>
+      <span class="mt-3 block text-[0.68rem] font-mono uppercase tracking-[0.22em] text-[color:var(--text-muted)]">${escapeHtml(label)}</span>
     </div>
   `
 }
 
 export function renderTagLinks(tags: Array<{ name: string; slug: string; count: number }>, limit = PAGE_SIZE): string {
   return `
-    <div class="tag-cloud">
-      ${tags.slice(0, limit).map((tag) => `<a class="tag-pill" href="/tags/${tag.slug}/">${escapeHtml(tag.name)} <span>${tag.count}</span></a>`).join('')}
+    <div class="flex flex-wrap gap-2.5">
+      ${tags.slice(0, limit).map((tag) => `<a class="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-2 text-sm text-[color:var(--text-soft)] transition hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]" href="/tags/${tag.slug}/">${escapeHtml(tag.name)} <span class="text-[color:var(--text-muted)]">${tag.count}</span></a>`).join('')}
     </div>
   `
 }

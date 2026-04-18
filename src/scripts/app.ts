@@ -25,9 +25,12 @@ function showToast(message: string) {
   }
 
   toastEl.textContent = message
-  toastEl.classList.add('is-visible')
+  toastEl.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2')
+  toastEl.classList.add('opacity-100', 'translate-y-0')
+
   window.setTimeout(() => {
-    toastEl.classList.remove('is-visible')
+    toastEl.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2')
+    toastEl.classList.remove('opacity-100', 'translate-y-0')
   }, 1800)
 }
 
@@ -39,15 +42,22 @@ function initThemeToggle() {
 
   const storage = window.localStorage
   let currentTheme: ThemeMode = resolveTheme(readStoredTheme(storage), window.matchMedia('(prefers-color-scheme: light)').matches)
+
+  const syncButtonLabel = () => {
+    const nextLabel = currentTheme === 'dark' ? '\u5207\u6362\u4eae\u8272' : '\u5207\u6362\u6697\u8272'
+    button.setAttribute('aria-label', nextLabel)
+    button.setAttribute('title', nextLabel)
+  }
+
   applyTheme(currentTheme)
-  button.textContent = currentTheme === 'dark' ? '切换为亮色' : '切换为暗色'
+  syncButtonLabel()
 
   button.addEventListener('click', () => {
     currentTheme = toggleTheme(currentTheme)
     storeTheme(currentTheme, storage)
     applyTheme(currentTheme)
-    button.textContent = currentTheme === 'dark' ? '切换为亮色' : '切换为暗色'
-    showToast(currentTheme === 'dark' ? '已切换到暗色模式' : '已切换到亮色模式')
+    syncButtonLabel()
+    showToast(currentTheme === 'dark' ? '\u5df2\u5207\u6362\u5230\u6697\u8272\u6a21\u5f0f' : '\u5df2\u5207\u6362\u5230\u4eae\u8272\u6a21\u5f0f')
   })
 }
 
@@ -58,11 +68,40 @@ function initMobileMenu() {
     return
   }
 
+  const closeMenu = () => {
+    toggle.setAttribute('aria-expanded', 'false')
+    nav.classList.add('hidden')
+  }
+
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true'
     toggle.setAttribute('aria-expanded', String(!expanded))
-    nav.classList.toggle('is-open', !expanded)
+    nav.classList.toggle('hidden', expanded)
   })
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      nav.classList.remove('hidden')
+      return
+    }
+
+    closeMenu()
+  })
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Node | null
+    if (!target || nav.contains(target) || toggle.contains(target)) {
+      return
+    }
+
+    if (window.innerWidth < 768) {
+      closeMenu()
+    }
+  })
+
+  if (window.innerWidth >= 768) {
+    nav.classList.remove('hidden')
+  }
 }
 
 function initClipboardActions() {
@@ -80,12 +119,17 @@ function initClipboardActions() {
 
 function initBackToTop() {
   const button = document.querySelector<HTMLButtonElement>('[data-back-to-top]')
-  if (!button) {
+  if (!button || document.body.dataset.page === 'home') {
     return
   }
 
   const toggleVisibility = () => {
-    button.classList.toggle('is-visible', window.scrollY > 400)
+    const visible = window.scrollY > 400
+    button.classList.toggle('pointer-events-none', !visible)
+    button.classList.toggle('opacity-0', !visible)
+    button.classList.toggle('translate-y-2', !visible)
+    button.classList.toggle('opacity-100', visible)
+    button.classList.toggle('translate-y-0', visible)
   }
 
   window.addEventListener('scroll', toggleVisibility, { passive: true })

@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import { existsSync, readdirSync, statSync } from 'node:fs'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 function collectHtmlEntries(rootDir: string): Record<string, string> {
@@ -39,6 +40,7 @@ export default defineConfig(() => {
   const htmlInputs = existsSync(resolve(rootDir, 'index.html')) ? collectHtmlEntries(rootDir) : {}
 
   return {
+    plugins: [tailwindcss()],
     build: {
       rollupOptions: {
         input: htmlInputs
