@@ -5,28 +5,13 @@ export const GITHUB_URL = 'https://github.com/GoFurry/gopher-atlas'
 export const PAGE_SIZE = 12
 
 export const CATEGORY_ORDER = [
-  'Language Basics',
-  'Concurrency',
-  'Runtime',
-  'Memory & GC',
-  'Networking',
   'Web Development',
-  'Performance',
-  'Testing',
-  'Database',
-  'Distributed Systems',
-  'Security',
-  'Tools',
-  'Engineering'
+  'Go New Features'
 ] as const
 
 export const TOPIC_CATEGORY_SLUGS = [
-  'concurrency',
-  'runtime',
-  'memory-gc',
-  'performance',
   'web-development',
-  'testing'
+  'go-new-features'
 ] as const
 
 export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C'] as const

@@ -3,13 +3,13 @@ import { parseSearchParams, stringifySearchState } from '../src/lib/articles'
 
 describe('article URL state', () => {
   it('parses supported query parameters into a normalized state object', () => {
-    const state = parseSearchParams(new URLSearchParams('q=gc&category=Runtime&tags=memory,gc&rating=S,A%2B&sort=rating&lang=en&page=3'))
+    const state = parseSearchParams(new URLSearchParams('q=gc&category=Web%20Development&tags=json,gc&rating=A%2B&sort=rating&lang=en&page=3'))
 
     expect(state).toEqual({
       q: 'gc',
-      category: 'Runtime',
-      tags: ['memory', 'gc'],
-      rating: ['S', 'A+'],
+      category: 'Web Development',
+      tags: ['json', 'gc'],
+      rating: ['A+'],
       sort: 'rating',
       lang: 'en',
       page: 3
