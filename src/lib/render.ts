@@ -1,4 +1,4 @@
-import { getCategorySlug, stringifySearchState, type ArticleItem, type ArticleSearchState } from './articles'
+import { getCategorySlug, stringifySearchState, type ArticleItem, type ArticleLink, type ArticleSearchState } from './articles'
 import {
   DIFFICULTY_LABELS,
   LANGUAGE_LABELS,
@@ -70,13 +70,26 @@ function getRatingBadgeClass(rating: Rating): string {
       return `${base} border-orange-300/24 bg-orange-400/11 text-orange-100`
     case 'C':
       return `${base} border-rose-300/22 bg-rose-400/10 text-rose-100`
-    case 'D+':
-      return `${base} border-fuchsia-300/20 bg-fuchsia-400/9 text-fuchsia-100`
-    case 'D':
-      return `${base} border-slate-300/18 bg-slate-400/8 text-slate-100`
     default:
       return `${base} border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-soft)]`
   }
+}
+
+function renderArticleLinkList(links: ArticleLink[]): string {
+  if (links.length === 0) {
+    return ''
+  }
+
+  return `
+    <div class="space-y-3 border-t border-[color:var(--line)] pt-5">
+      <span class="block text-[0.72rem] font-medium tracking-[0.14em] text-[color:var(--text-muted)]">分段链接</span>
+      <div class="flex flex-wrap gap-2.5">
+        ${links.map((link) => `
+          <a class="inline-flex items-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-2 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]" href="${escapeHtml(link.url)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>
+        `).join('')}
+      </div>
+    </div>
+  `
 }
 
 export function renderArticleCard(article: ArticleItem): string {
@@ -111,6 +124,7 @@ export function renderArticleCard(article: ArticleItem): string {
           <a class="${BUTTON_RECT_PRIMARY_CLASS}" href="${escapeHtml(article.url)}" target="_blank" rel="noreferrer">\u9605\u8bfb\u5168\u6587</a>
           <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-text="${escapeHtml(article.url)}">\u590d\u5236\u539f\u6587\u94fe\u63a5</button>
         </div>
+        ${article.links?.length ? renderArticleLinkList(article.links) : ''}
       </div>
     </article>
   `

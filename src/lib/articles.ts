@@ -11,10 +11,16 @@ import {
   type SortOption
 } from './site'
 
+export const articleLinkSchema = z.object({
+  label: z.string().min(1),
+  url: z.string().url()
+})
+
 export const articleSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   url: z.string().url(),
+  links: z.array(articleLinkSchema).min(1).optional(),
   author: z.string().min(1).optional(),
   source: z.string().min(1).optional(),
   publishedAt: z.string().optional(),
@@ -31,6 +37,7 @@ export const articleSchema = z.object({
 })
 
 export type ArticleItem = z.infer<typeof articleSchema>
+export type ArticleLink = z.infer<typeof articleLinkSchema>
 
 export type ArticleSearchState = {
   q: string

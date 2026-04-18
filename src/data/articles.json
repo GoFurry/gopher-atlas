@@ -52,6 +52,11 @@
     "id": "go-context",
     "title": "Go Concurrency Patterns: Context",
     "url": "https://go.dev/blog/context",
+    "links": [
+      { "label": "阅读 1：Context", "url": "https://go.dev/blog/context" },
+      { "label": "阅读 2：Pipelines", "url": "https://go.dev/blog/pipelines" },
+      { "label": "阅读 3：Share Memory", "url": "https://go.dev/blog/codelab-share" }
+    ],
     "author": "Sameer Ajmani",
     "source": "The Go Blog",
     "addedAt": "2026-04-11",
@@ -69,6 +74,11 @@
     "id": "go-pipelines",
     "title": "Go Concurrency Patterns: Pipelines and cancellation",
     "url": "https://go.dev/blog/pipelines",
+    "links": [
+      { "label": "阅读 1：Context", "url": "https://go.dev/blog/context" },
+      { "label": "阅读 2：Pipelines", "url": "https://go.dev/blog/pipelines" },
+      { "label": "阅读 3：Share Memory", "url": "https://go.dev/blog/codelab-share" }
+    ],
     "author": "Sameer Ajmani",
     "source": "The Go Blog",
     "addedAt": "2026-04-11",
@@ -86,6 +96,11 @@
     "id": "share-memory-by-communicating",
     "title": "Share Memory By Communicating",
     "url": "https://go.dev/blog/codelab-share",
+    "links": [
+      { "label": "阅读 1：Context", "url": "https://go.dev/blog/context" },
+      { "label": "阅读 2：Pipelines", "url": "https://go.dev/blog/pipelines" },
+      { "label": "阅读 3：Share Memory", "url": "https://go.dev/blog/codelab-share" }
+    ],
     "author": "Andrew Gerrand",
     "source": "The Go Blog",
     "addedAt": "2026-04-12",
@@ -229,6 +244,10 @@
     "id": "go15gc",
     "title": "Go GC: Prioritizing low latency and simplicity",
     "url": "https://go.dev/blog/go15gc",
+    "links": [
+      { "label": "前篇：Go GC", "url": "https://go.dev/blog/go15gc" },
+      { "label": "后篇：GC Journey", "url": "https://go.dev/blog/ismmkeynote" }
+    ],
     "author": "Richard Hudson",
     "source": "The Go Blog",
     "addedAt": "2026-04-15",
@@ -245,6 +264,10 @@
     "id": "go-gc-journey",
     "title": "Getting to Go: The Journey of Go's Garbage Collector",
     "url": "https://go.dev/blog/ismmkeynote",
+    "links": [
+      { "label": "前篇：Go GC", "url": "https://go.dev/blog/go15gc" },
+      { "label": "后篇：GC Journey", "url": "https://go.dev/blog/ismmkeynote" }
+    ],
     "author": "Rick Hudson",
     "source": "The Go Blog",
     "addedAt": "2026-04-15",

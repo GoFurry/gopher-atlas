@@ -29,7 +29,7 @@ export const TOPIC_CATEGORY_SLUGS = [
   'testing'
 ] as const
 
-export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D'] as const
+export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C'] as const
 export const SORT_OPTIONS = [
   'recommended',
   'rating',

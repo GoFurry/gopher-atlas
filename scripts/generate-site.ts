@@ -108,7 +108,7 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
     ? ''
     : `
     <button class="pointer-events-none fixed right-4 bottom-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--panel)] px-4 text-sm text-[color:var(--text-soft)] opacity-0 shadow-[var(--shadow-soft)] transition duration-200 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] md:right-6 md:bottom-6" type="button" aria-label="&#x8FD4;&#x56DE;&#x9876;&#x90E8;" data-back-to-top>&#x8FD4;&#x56DE;&#x9876;&#x90E8;</button>
-    <div class="pointer-events-none fixed top-5 left-1/2 z-40 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-3 text-center text-sm text-[color:var(--text)] opacity-0 shadow-[var(--shadow-soft)] transition duration-300 md:top-6" aria-live="polite" data-toast></div>`
+    <div class="pointer-events-none fixed top-3 left-1/2 z-40 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-3 text-center text-sm text-[color:var(--text)] opacity-0 shadow-[var(--shadow-soft)] transition duration-300 md:top-4" aria-live="polite" data-toast></div>`
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -226,12 +226,20 @@ function renderFooter(pageId: string): string {
   `
 }
 function renderHeroStats(articles: ArticleItem[], topics: TopicViewModel[], tags: Array<{ name: string; count: number; slug: string }>) {
+  const stats = [
+    { label: '已收录文章', value: articles.length, delay: 120 },
+    { label: '专题数量', value: topics.length, delay: 200 },
+    { label: '标签数量', value: tags.length, delay: 280 },
+    { label: '最后更新', value: formatDate(articles.map((article) => article.addedAt).sort().at(-1)), delay: 360 }
+  ]
+
   return `
     <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-      ${renderStat('已收录文章', articles.length)}
-      ${renderStat('专题数量', topics.length)}
-      ${renderStat('标签数量', tags.length)}
-      ${renderStat('最后更新', formatDate(articles.map((article) => article.addedAt).sort().at(-1)))}
+      ${stats.map((stat) => `
+        <div class="opacity-0 [animation:hero-rise_820ms_cubic-bezier(0.22,1,0.36,1)_forwards] motion-reduce:opacity-100 motion-reduce:[animation:none]" style="animation-delay:${stat.delay}ms">
+          ${renderStat(stat.label, stat.value)}
+        </div>
+      `).join('')}
     </div>
   `
 }
@@ -328,7 +336,7 @@ function renderCustomSelect(
 }
 
 function renderFilterPanel(categories: string[], tags: Array<{ name: string; count: number }>) {
-  const ratings: Rating[] = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D']
+  const ratings: Rating[] = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C']
   const sortOptions = Object.entries(SORT_OPTION_LABELS).map(([value, label]) => ({ value, label }))
   const categoryOptions = [{ value: '', label: '\u5168\u90e8\u5206\u7c7b' }, ...categories.map((category) => ({ value: category, label: category }))]
   const languageOptions = [
