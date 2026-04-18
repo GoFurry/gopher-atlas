@@ -251,7 +251,7 @@ function renderFooter(pageId: string): string {
 function renderHeroStats(articles: ArticleItem[], topics: TopicViewModel[], tags: Array<{ name: string; count: number; slug: string }>) {
   const stats = [
     { label: '已收录文章', value: articles.length, delay: 120 },
-    { label: '专题数量', value: topics.length, delay: 200 },
+    { label: '话题数量', value: topics.length, delay: 200 },
     { label: '标签数量', value: tags.length, delay: 280 },
     { label: '最后更新', value: formatDate(articles.map((article) => article.addedAt).sort().at(-1)), delay: 360 }
   ]
@@ -488,7 +488,7 @@ function renderTopicsIndexPage(topics: TopicViewModel[], articles: ArticleItem[]
   )
 }
 
-function renderArticlesPage(articles: ArticleItem[]) {
+function renderArticlesPage(articles: ArticleItem[], topics: TopicViewModel[]) {
   const stats = getArticleStats(articles)
   const sorted = sortArticles(filterArticles(articles, DEFAULT_SEARCH_STATE), 'recommended')
   const paginated = paginateArticles(sorted, 1)
@@ -505,7 +505,7 @@ function renderArticlesPage(articles: ArticleItem[]) {
           'Articles',
           '\u5168\u90e8\u6587\u7ae0',
           '\u8fd9\u91cc\u6536\u5f55\u4e86\u5927\u91cf\u7684\u4f18\u8d28\u6587\u7ae0\uff0c\u4f60\u53ef\u4ee5\u5728\u9605\u8bfb\u4e2d\u501f\u9274\u4ed6\u4eba\u7684\u601d\u8def\u3001\u63d0\u5347\u81ea\u5df1\u7684\u4ee3\u7801\u54c1\u5473\u6216\u6293\u4f4f\u7075\u611f\u7684\u706b\u82b1\u3002',
-          renderHeroStats(articles, [], groupTagsByCount(articles))
+          renderHeroStats(articles, topics, groupTagsByCount(articles))
         )}
         ${renderFilterPanel(stats.categories, groupTagsByCount(articles))}
         <section class="space-y-6" data-results-section>
@@ -703,7 +703,7 @@ async function main() {
   const allRoutes = ['/', '/articles/', '/topics/', '/about/', '/contribute/']
 
   await writePage('index.html', renderHomePage())
-  await writePage('articles/index.html', renderArticlesPage(articles))
+  await writePage('articles/index.html', renderArticlesPage(articles, topicPages))
   await writePage('topics/index.html', renderTopicsIndexPage(topicPages, articles))
   await writePage('about/index.html', renderMarkdownPage(aboutPage.title, aboutPage.description, aboutPage.body, '/about/', 'about'))
   await writePage('contribute/index.html', renderMarkdownPage(contributePage.title, contributePage.description, contributePage.body, '/contribute/', 'contribute'))
