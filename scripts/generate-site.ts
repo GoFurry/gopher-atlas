@@ -460,7 +460,7 @@ function renderTopicsIndexPage(topics: TopicViewModel[], articles: ArticleItem[]
   return renderShell(
     {
       title: `\u8bdd\u9898\u4e13\u533a | ${SITE_NAME}`,
-      description: '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u4e13\u9898\u5206\u533a\u5165\u624b\u3002',
+      description: '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u8bdd\u9898\u4e13\u533a\u5165\u624b\u3002',
       pageId: 'topics'
     },
     `
@@ -468,7 +468,7 @@ function renderTopicsIndexPage(topics: TopicViewModel[], articles: ArticleItem[]
         ${renderPageHero(
           'Topics',
           '\u8bdd\u9898\u4e13\u533a',
-          '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u4e13\u9898\u5206\u533a\u5165\u624b\u3002',
+          '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u8bdd\u9898\u4e13\u533a\u5165\u624b\u3002',
           `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
            <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u94fe\u63a5</button>`
         )}
