@@ -155,27 +155,207 @@ function setCheckboxGroup(form: HTMLFormElement, name: string, values: string[])
   }
 }
 
+function getFieldValue(form: HTMLFormElement, name: string): string {
+  return form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${name}"]`)?.value ?? ''
+}
+
+function setFieldValue(form: HTMLFormElement, name: string, value: string) {
+  const field = form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${name}"]`)
+  if (field) {
+    field.value = value
+  }
+}
+
+function syncCustomSelect(root: HTMLElement) {
+  const input = root.querySelector<HTMLInputElement>('[data-custom-select-input]')
+  const valueLabel = root.querySelector<HTMLElement>('[data-custom-select-value]')
+  const trigger = root.querySelector<HTMLButtonElement>('[data-custom-select-trigger]')
+  const options = [...root.querySelectorAll<HTMLElement>('[data-custom-select-option]')]
+  if (!input || !valueLabel || !trigger) {
+    return
+  }
+
+  const selected = options.find((option) => option.dataset.value === input.value) ?? options[0]
+  const label = selected?.dataset.label ?? trigger.dataset.placeholder ?? ''
+
+  valueLabel.textContent = label
+  options.forEach((option) => {
+    const isSelected = option === selected
+    option.dataset.selected = String(isSelected)
+    option.setAttribute('aria-selected', String(isSelected))
+  })
+}
+
+function closeCustomSelect(root: HTMLElement) {
+  const trigger = root.querySelector<HTMLButtonElement>('[data-custom-select-trigger]')
+  const menu = root.querySelector<HTMLElement>('[data-custom-select-menu]')
+  const icon = root.querySelector<HTMLElement>('[data-custom-select-icon]')
+  if (!trigger || !menu || !icon) {
+    return
+  }
+
+  trigger.setAttribute('aria-expanded', 'false')
+  menu.dataset.open = 'false'
+  menu.classList.remove('pointer-events-auto', 'translate-y-0', 'opacity-100')
+  menu.classList.add('pointer-events-none', 'translate-y-2', 'opacity-0')
+  icon.classList.remove('rotate-180')
+}
+
+function openCustomSelect(root: HTMLElement, all: HTMLElement[]) {
+  const trigger = root.querySelector<HTMLButtonElement>('[data-custom-select-trigger]')
+  const menu = root.querySelector<HTMLElement>('[data-custom-select-menu]')
+  const icon = root.querySelector<HTMLElement>('[data-custom-select-icon]')
+  if (!trigger || !menu || !icon) {
+    return
+  }
+
+  all.forEach((selectRoot) => {
+    if (selectRoot !== root) {
+      closeCustomSelect(selectRoot)
+    }
+  })
+
+  trigger.setAttribute('aria-expanded', 'true')
+  menu.dataset.open = 'true'
+  menu.classList.remove('pointer-events-none', 'translate-y-2', 'opacity-0')
+  menu.classList.add('pointer-events-auto', 'translate-y-0', 'opacity-100')
+  icon.classList.add('rotate-180')
+}
+
+function syncAllCustomSelects(form: HTMLFormElement) {
+  form.querySelectorAll<HTMLElement>('[data-custom-select]').forEach((root) => {
+    syncCustomSelect(root)
+    closeCustomSelect(root)
+  })
+}
+
+function initCustomSelects(form: HTMLFormElement) {
+  const roots = [...form.querySelectorAll<HTMLElement>('[data-custom-select]')]
+  if (roots.length === 0) {
+    return
+  }
+
+  roots.forEach((root) => syncCustomSelect(root))
+
+  roots.forEach((root) => {
+    const trigger = root.querySelector<HTMLButtonElement>('[data-custom-select-trigger]')
+    const input = root.querySelector<HTMLInputElement>('[data-custom-select-input]')
+    const options = [...root.querySelectorAll<HTMLButtonElement>('[data-custom-select-option]')]
+    if (!trigger || !input) {
+      return
+    }
+
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true'
+      if (expanded) {
+        closeCustomSelect(root)
+        return
+      }
+
+      openCustomSelect(root, roots)
+    })
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        input.value = option.dataset.value ?? ''
+        syncCustomSelect(root)
+        closeCustomSelect(root)
+        input.dispatchEvent(new Event('change', { bubbles: true }))
+        trigger.focus()
+      })
+    })
+  })
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Node | null
+    if (!target) {
+      return
+    }
+
+    roots.forEach((root) => {
+      if (!root.contains(target)) {
+        closeCustomSelect(root)
+      }
+    })
+  })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      roots.forEach((root) => closeCustomSelect(root))
+    }
+  })
+}
+
+function initTagLoadMore(form: HTMLFormElement) {
+  const list = form.querySelector<HTMLElement>('[data-tag-list]')
+  const button = form.querySelector<HTMLButtonElement>('[data-load-more-tags]')
+  const completeHint = form.querySelector<HTMLElement>('[data-tag-list-complete]')
+  if (!list || !button) {
+    return {
+      reset() {}
+    }
+  }
+
+  const items = [...list.querySelectorAll<HTMLElement>('[data-tag-item]')]
+  const initialVisible = Number.parseInt(list.dataset.initialVisible ?? '30', 10)
+  const step = Number.parseInt(list.dataset.step ?? '10', 10)
+  let visibleCount = initialVisible
+
+  const sync = () => {
+    const checkedIndexes = items
+      .filter((item) => item.querySelector<HTMLInputElement>('input[name="tags"]')?.checked)
+      .map((item) => Number.parseInt(item.dataset.tagIndex ?? '-1', 10))
+      .filter((index) => !Number.isNaN(index))
+    const minimumVisible = checkedIndexes.length > 0 ? Math.max(...checkedIndexes) + 1 : 0
+    const nextVisible = Math.max(visibleCount, minimumVisible)
+
+    items.forEach((item, index) => {
+      item.classList.toggle('hidden', index >= nextVisible)
+    })
+    const isComplete = nextVisible >= items.length
+    button.classList.toggle('hidden', isComplete)
+    button.style.display = isComplete ? 'none' : ''
+    completeHint?.classList.toggle('hidden', !isComplete)
+    if (completeHint) {
+      completeHint.style.display = isComplete ? '' : 'none'
+    }
+  }
+
+  button.addEventListener('click', () => {
+    visibleCount = Math.min(items.length, visibleCount + step)
+    sync()
+  })
+
+  form.addEventListener('change', (event) => {
+    const target = event.target as HTMLInputElement | null
+    if (target?.name === 'tags') {
+      sync()
+    }
+  })
+
+  sync()
+
+  return {
+    reset() {
+      visibleCount = initialVisible
+      sync()
+    }
+  }
+}
+
 function syncForm(form: HTMLFormElement, state: ArticleSearchState) {
   const q = form.querySelector<HTMLInputElement>('input[name="q"]')
-  const category = form.querySelector<HTMLSelectElement>('select[name="category"]')
-  const lang = form.querySelector<HTMLSelectElement>('select[name="lang"]')
-  const sort = form.querySelector<HTMLSelectElement>('select[name="sort"]')
 
   if (q) {
     q.value = state.q
   }
-  if (category) {
-    category.value = state.category
-  }
-  if (lang) {
-    lang.value = state.lang
-  }
-  if (sort) {
-    sort.value = state.sort
-  }
+  setFieldValue(form, 'category', state.category)
+  setFieldValue(form, 'lang', state.lang)
+  setFieldValue(form, 'sort', state.sort)
 
   setCheckboxGroup(form, 'tags', state.tags)
   setCheckboxGroup(form, 'rating', state.rating)
+  syncAllCustomSelects(form)
 }
 
 function getCheckedValues(form: HTMLFormElement, name: string): string[] {
@@ -184,9 +364,9 @@ function getCheckedValues(form: HTMLFormElement, name: string): string[] {
 
 function readFormState(form: HTMLFormElement): ArticleSearchState {
   const q = form.querySelector<HTMLInputElement>('input[name="q"]')?.value.trim() ?? ''
-  const category = form.querySelector<HTMLSelectElement>('select[name="category"]')?.value ?? ''
-  const lang = form.querySelector<HTMLSelectElement>('select[name="lang"]')?.value ?? ''
-  const sort = form.querySelector<HTMLSelectElement>('select[name="sort"]')?.value ?? DEFAULT_SEARCH_STATE.sort
+  const category = getFieldValue(form, 'category')
+  const lang = getFieldValue(form, 'lang')
+  const sort = getFieldValue(form, 'sort') || DEFAULT_SEARCH_STATE.sort
 
   return {
     q,
@@ -215,8 +395,11 @@ function initArticlesExplorer() {
     return
   }
 
+  initCustomSelects(form)
+  const tagLoadController = initTagLoadMore(form)
   let state = parseSearchParams(new URLSearchParams(window.location.search))
   syncForm(form, state)
+  tagLoadController.reset()
 
   const render = () => {
     const filtered = filterArticles(pageData.articles, state)
@@ -225,7 +408,7 @@ function initArticlesExplorer() {
 
     state = { ...state, page: paginated.currentPage }
     count.textContent = String(filtered.length)
-    results.innerHTML = renderArticleGrid(paginated.items, '没有找到符合条件的文章，试试减少标签或放宽关键词。')
+    results.innerHTML = renderArticleGrid(paginated.items, '\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u6587\u7ae0\uff0c\u8bd5\u8bd5\u51cf\u5c11\u6807\u7b7e\u6216\u653e\u5bbd\u5173\u952e\u8bcd\u3002')
     pagination.innerHTML = renderPagination(paginated.currentPage, paginated.totalPages, state)
     history.replaceState({}, '', `/articles/${stringifySearchState(state)}`)
   }
@@ -270,12 +453,14 @@ function initArticlesExplorer() {
     form.reset()
     state = { ...DEFAULT_SEARCH_STATE }
     syncForm(form, state)
+    tagLoadController.reset()
     render()
   })
 
   window.addEventListener('popstate', () => {
     state = parseSearchParams(new URLSearchParams(window.location.search))
     syncForm(form, state)
+    tagLoadController.reset()
     render()
   })
 

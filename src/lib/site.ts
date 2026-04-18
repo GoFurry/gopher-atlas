@@ -29,7 +29,7 @@ export const TOPIC_CATEGORY_SLUGS = [
   'testing'
 ] as const
 
-export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B'] as const
+export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D'] as const
 export const SORT_OPTIONS = [
   'recommended',
   'rating',
@@ -37,6 +37,13 @@ export const SORT_OPTIONS = [
   'published-date',
   'title-asc'
 ] as const
+export const SORT_OPTION_LABELS = {
+  recommended: '推荐优先',
+  rating: '按评级',
+  'recently-added': '最近收录',
+  'published-date': '原文日期',
+  'title-asc': '标题字母序'
+} satisfies Record<(typeof SORT_OPTIONS)[number], string>
 
 export const LANGUAGE_LABELS = {
   zh: '中文',

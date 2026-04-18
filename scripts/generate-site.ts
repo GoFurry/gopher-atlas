@@ -13,6 +13,8 @@ import {
 } from '../src/lib/articles'
 import { loadArticles, loadStaticPageDocument, loadTopicDocuments, type TopicDocument } from '../src/lib/content'
 import {
+  BUTTON_RECT_GHOST_CLASS,
+  BUTTON_RECT_PRIMARY_CLASS,
   buildTagHref,
   BUTTON_GHOST_CLASS,
   BUTTON_PRIMARY_CLASS,
@@ -32,6 +34,7 @@ import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
+  SORT_OPTION_LABELS,
   TOPIC_CATEGORY_SLUGS,
   formatDate,
   slugify,
@@ -68,6 +71,11 @@ const HOME_BUTTON_GHOST_CLASS = BUTTON_GHOST_CLASS
   .replace('rounded-full', 'rounded-lg')
   .replace('duration-200', 'duration-500')
   .replace('hover:-translate-y-0.5', 'hover:-translate-y-px')
+const FILTER_LABEL_CLASS = 'block text-[0.88rem] font-medium tracking-[0.08em] text-[color:var(--text-soft)]'
+const FILTER_INPUT_CLASS = 'h-12 w-full rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text)] outline-none transition duration-500 placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--line-strong)] focus:bg-[color:var(--surface-strong)]'
+const FILTER_SELECT_TRIGGER_CLASS = `${FILTER_INPUT_CLASS} inline-flex items-center justify-between gap-4 pr-3 text-left`
+const FILTER_SELECT_MENU_CLASS = 'pointer-events-none absolute top-[calc(100%+0.55rem)] left-0 right-0 z-20 max-h-72 overflow-y-auto rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] p-2 opacity-0 shadow-[var(--shadow-soft)] transition duration-500 translate-y-2 data-[open=true]:pointer-events-auto data-[open=true]:translate-y-0 data-[open=true]:opacity-100'
+const FILTER_CHIP_CLASS = 'inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition duration-500 group-hover:-translate-y-px group-hover:border-[color:var(--line-strong)] group-hover:bg-[color:var(--surface-strong)] peer-checked:border-[color:var(--accent)] peer-checked:bg-[color:color-mix(in_oklab,var(--accent)_18%,transparent)] peer-checked:text-[color:var(--text)] peer-checked:shadow-[0_0_0_1px_color-mix(in_oklab,var(--accent)_35%,transparent)]'
 
 async function cleanGeneratedTargets() {
   await Promise.all(
@@ -100,7 +108,7 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
     ? ''
     : `
     <button class="pointer-events-none fixed right-4 bottom-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--panel)] px-4 text-sm text-[color:var(--text-soft)] opacity-0 shadow-[var(--shadow-soft)] transition duration-200 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] md:right-6 md:bottom-6" type="button" aria-label="&#x8FD4;&#x56DE;&#x9876;&#x90E8;" data-back-to-top>&#x8FD4;&#x56DE;&#x9876;&#x90E8;</button>
-    <div class="pointer-events-none fixed right-4 bottom-20 z-40 max-w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-3 text-sm text-[color:var(--text)] opacity-0 shadow-[var(--shadow-soft)] transition duration-200 md:right-6 md:bottom-24" aria-live="polite" data-toast></div>`
+    <div class="pointer-events-none fixed top-5 left-1/2 z-40 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-3 text-center text-sm text-[color:var(--text)] opacity-0 shadow-[var(--shadow-soft)] transition duration-300 md:top-6" aria-live="polite" data-toast></div>`
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -149,7 +157,7 @@ function renderHeader(pathname: string): string {
   const links = [
     { href: '/', label: '\u9996\u9875' },
     { href: '/articles/', label: '\u5168\u90e8\u6587\u7ae0' },
-    { href: '/topics/', label: '\u4e13\u9898' }
+    { href: '/topics/', label: '\u8bdd\u9898\u4e13\u533a' }
   ]
 
   const navLinks = links.map((link) => {
@@ -231,11 +239,11 @@ function renderHeroStats(articles: ArticleItem[], topics: TopicViewModel[], tags
 function renderTopicCards(topics: TopicViewModel[]): string {
   return `
     <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-      ${topics.map((topic) => `
-        <article class="${SUBTLE_PANEL_CLASS} flex h-full flex-col gap-4 px-6 py-6">
-          <div class="flex items-center justify-between gap-4 text-[0.68rem] font-mono uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
-            <span>专题</span>
-            <span>${topic.articles.length} 篇</span>
+      ${topics.map((topic, index) => `
+        <article class="${SUBTLE_PANEL_CLASS} flex h-full flex-col gap-4 px-6 py-6 opacity-0 [animation:hero-rise_820ms_cubic-bezier(0.22,1,0.36,1)_forwards] motion-reduce:opacity-100 motion-reduce:[animation:none]" style="animation-delay:${140 + (index * 90)}ms">
+          <div class="flex items-center justify-between gap-4 text-[0.82rem] font-medium tracking-[0.08em] text-[color:var(--text-soft)]">
+            <span>\u4e13\u9898</span>
+            <span>${topic.articles.length} \u7bc7</span>
           </div>
           <div class="space-y-3">
             <h3 class="font-display text-[1.8rem] leading-[1.08] tracking-[-0.03em] text-[color:var(--text)]">
@@ -244,7 +252,7 @@ function renderTopicCards(topics: TopicViewModel[]): string {
             <p class="text-sm leading-7 text-[color:var(--text-soft)]">${escapeHtml(topic.summary)}</p>
           </div>
           <div class="mt-auto">
-            <a class="${BUTTON_GHOST_CLASS}" href="/topics/${topic.slug}/">进入专题</a>
+            <a class="${BUTTON_RECT_GHOST_CLASS}" href="/topics/${topic.slug}/">\u8fdb\u5165\u4e13\u9898</a>
           </div>
         </article>
       `).join('')}
@@ -287,81 +295,98 @@ function renderPageHero(label: string, title: string, description: string, actio
   `
 }
 
+function renderCustomSelect(
+  name: string,
+  label: string,
+  placeholder: string,
+  options: Array<{ value: string; label: string }>
+): string {
+  return `
+    <label class="space-y-2">
+      <span class="${FILTER_LABEL_CLASS}">${label}</span>
+      <div class="relative" data-custom-select data-name="${name}">
+        <input type="hidden" name="${name}" value="" data-custom-select-input />
+        <button class="${FILTER_SELECT_TRIGGER_CLASS}" type="button" aria-expanded="false" aria-haspopup="listbox" data-custom-select-trigger data-placeholder="${escapeHtml(placeholder)}">
+          <span class="truncate" data-custom-select-value>${escapeHtml(placeholder)}</span>
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface-strong)] text-[color:var(--text-muted)] transition duration-500" data-custom-select-icon>
+            <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3.25 5.75 8 10.5l4.75-4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="${FILTER_SELECT_MENU_CLASS}" role="listbox" aria-label="${escapeHtml(label)}" data-custom-select-menu data-open="false">
+          ${options.map((option) => `
+            <button class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-[color:var(--text-soft)] transition duration-500 hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] data-[selected=true]:bg-[color:color-mix(in_oklab,var(--accent)_18%,transparent)] data-[selected=true]:text-[color:var(--text)]" type="button" role="option" data-custom-select-option data-selected="false" data-value="${escapeHtml(option.value)}" data-label="${escapeHtml(option.label)}" aria-selected="false">
+              <span>${escapeHtml(option.label)}</span>
+              <span class="text-xs text-[color:var(--text-muted)] opacity-0 transition duration-500 data-[selected=true]:opacity-100">\u5df2\u9009</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </label>
+  `
+}
+
 function renderFilterPanel(categories: string[], tags: Array<{ name: string; count: number }>) {
-  const ratings: Rating[] = ['S+', 'S', 'A+', 'A', 'B+', 'B']
-  const fieldClass = 'h-12 w-full rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--line-strong)] focus:bg-[color:var(--surface-strong)]'
+  const ratings: Rating[] = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D']
+  const sortOptions = Object.entries(SORT_OPTION_LABELS).map(([value, label]) => ({ value, label }))
+  const categoryOptions = [{ value: '', label: '\u5168\u90e8\u5206\u7c7b' }, ...categories.map((category) => ({ value: category, label: category }))]
+  const languageOptions = [
+    { value: '', label: '\u5168\u90e8\u8bed\u8a00' },
+    { value: 'zh', label: '\u4e2d\u6587' },
+    { value: 'en', label: 'English' }
+  ]
 
   return `
     <section class="${PANEL_CLASS} px-6 py-6 md:px-8 md:py-8">
-      <div class="flex flex-col gap-4 border-b border-[color:var(--line)] pb-6 md:flex-row md:items-end md:justify-between">
-        <div class="space-y-3">
+      <div class="flex items-start justify-between gap-3 border-b border-[color:var(--line)] pb-6">
+        <div class="min-w-0 space-y-3">
           <span class="${SECTION_EYEBROW_CLASS}">Search tools</span>
-          <h2 class="font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-[1.02] tracking-[-0.04em] text-[color:var(--text)]">搜索、筛选与排序</h2>
+          <h2 class="font-display text-[clamp(1.55rem,2.5vw,2.2rem)] leading-[1.02] tracking-[-0.04em] text-[color:var(--text)]">\u6587\u7ae0\u7b5b\u9009</h2>
         </div>
-        <button class="${BUTTON_GHOST_CLASS}" type="button" data-copy-current-link>复制当前筛选链接</button>
+        <button class="${BUTTON_RECT_GHOST_CLASS} shrink-0 px-4" type="button" data-copy-current-link>\u590d\u5236\u94fe\u63a5</button>
       </div>
       <form class="mt-6 space-y-6" action="/articles/" method="get" data-article-form>
         <div class="grid gap-4 xl:grid-cols-4">
           <label class="space-y-2">
-            <span class="${SECTION_EYEBROW_CLASS}">关键词</span>
-            <input class="${fieldClass}" type="search" name="q" placeholder="搜索标题、标签、作者或推荐理由" />
+            <span class="${FILTER_LABEL_CLASS}">\u5173\u952e\u8bcd</span>
+            <input class="${FILTER_INPUT_CLASS}" type="search" name="q" placeholder="\u641c\u7d22\u6807\u9898\u3001\u6807\u7b7e\u3001\u4f5c\u8005\u6216\u63a8\u8350\u7406\u7531" />
           </label>
-          <label class="space-y-2">
-            <span class="${SECTION_EYEBROW_CLASS}">分类</span>
-            <select class="${fieldClass}" name="category">
-              <option value="">全部分类</option>
-              ${categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('')}
-            </select>
-          </label>
-          <label class="space-y-2">
-            <span class="${SECTION_EYEBROW_CLASS}">语言</span>
-            <select class="${fieldClass}" name="lang">
-              <option value="">全部语言</option>
-              <option value="zh">中文</option>
-              <option value="en">English</option>
-            </select>
-          </label>
-          <label class="space-y-2">
-            <span class="${SECTION_EYEBROW_CLASS}">排序</span>
-            <select class="${fieldClass}" name="sort">
-              <option value="recommended">Recommended</option>
-              <option value="rating">Rating</option>
-              <option value="recently-added">Recently Added</option>
-              <option value="published-date">Published Date</option>
-              <option value="title-asc">Title A-Z</option>
-            </select>
-          </label>
+          ${renderCustomSelect('category', '\u5206\u7c7b', '\u5168\u90e8\u5206\u7c7b', categoryOptions)}
+          ${renderCustomSelect('lang', '\u8bed\u8a00', '\u5168\u90e8\u8bed\u8a00', languageOptions)}
+          ${renderCustomSelect('sort', '\u6392\u5e8f', SORT_OPTION_LABELS.recommended, sortOptions)}
         </div>
         <div class="grid gap-6 border-t border-[color:var(--line)] pt-6">
           <fieldset class="space-y-3">
-            <legend class="${SECTION_EYEBROW_CLASS}">评级</legend>
+            <legend class="${FILTER_LABEL_CLASS}">\u8bc4\u7ea7</legend>
             <div class="flex flex-wrap gap-2.5">
               ${ratings.map((rating) => `
                 <label class="group relative cursor-pointer">
                   <input class="peer sr-only" type="checkbox" name="rating" value="${rating}" />
-                  <span class="inline-flex min-h-10 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition peer-checked:border-[color:var(--line-strong)] peer-checked:bg-[color:var(--surface-strong)] peer-checked:text-[color:var(--text)] group-hover:border-[color:var(--line-strong)] group-hover:bg-[color:var(--surface-strong)]">${rating}</span>
+                  <span class="${FILTER_CHIP_CLASS}">${rating}</span>
                 </label>
               `).join('')}
             </div>
           </fieldset>
           <fieldset class="space-y-3 border-t border-[color:var(--line)] pt-6">
-            <legend class="${SECTION_EYEBROW_CLASS}">标签</legend>
-            <div class="flex flex-wrap gap-2.5">
-              ${tags.map((tag) => `
-                <label class="group relative cursor-pointer">
+            <legend class="${FILTER_LABEL_CLASS}">\u6807\u7b7e</legend>
+            <div class="flex flex-wrap gap-2.5" data-tag-list data-initial-visible="30" data-step="10">
+              ${tags.map((tag, index) => `
+                <label class="group relative cursor-pointer" data-tag-item data-tag-index="${index}">
                   <input class="peer sr-only" type="checkbox" name="tags" value="${escapeHtml(tag.name)}" />
-                  <span class="inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition peer-checked:border-[color:var(--line-strong)] peer-checked:bg-[color:var(--surface-strong)] peer-checked:text-[color:var(--text)] group-hover:border-[color:var(--line-strong)] group-hover:bg-[color:var(--surface-strong)]">
+                  <span class="${FILTER_CHIP_CLASS} gap-2">
                     ${escapeHtml(tag.name)}
                     <small class="text-[color:var(--text-muted)]">${tag.count}</small>
                   </span>
                 </label>
               `).join('')}
             </div>
+            ${tags.length > 30 ? `<div class="mt-2 flex flex-col items-center gap-2"><button class="${BUTTON_RECT_GHOST_CLASS} px-4" type="button" data-load-more-tags>\u52a0\u8f7d\u66f4\u591a</button><p class="hidden text-sm text-[color:var(--text-muted)]" data-tag-list-complete>\u5df2\u5c55\u793a\u5168\u90e8\u6807\u7b7e</p></div>` : ''}
           </fieldset>
         </div>
         <div class="flex flex-wrap gap-3">
-          <button class="${BUTTON_PRIMARY_CLASS}" type="submit">应用筛选</button>
-          <button class="${BUTTON_GHOST_CLASS}" type="button" data-reset-filters>重置条件</button>
+          <button class="${BUTTON_RECT_PRIMARY_CLASS}" type="submit">\u5e94\u7528\u7b5b\u9009</button>
+          <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-reset-filters>\u91cd\u7f6e\u6761\u4ef6</button>
         </div>
       </form>
     </section>
@@ -392,8 +417,7 @@ function renderHomePage(): string {
           <div class="hidden lg:flex lg:items-center lg:justify-end lg:pr-[clamp(1.75rem,4vw,4rem)]">
             <div class="home-hero__stage">
               <div class="home-hero__halo"></div>
-              <div class="home-hero__contour"></div>
-              <div class="home-hero__crosshair"></div>
+              <div class="home-hero__ornaments"></div>
               <img class="home-hero__logo" src="${LOGO_SRC}" alt="" />
             </div>
           </div>
@@ -406,40 +430,26 @@ function renderHomePage(): string {
 function renderTopicsIndexPage(topics: TopicViewModel[], articles: ArticleItem[]): string {
   return renderShell(
     {
-      title: `专题总览 | ${SITE_NAME}`,
-      description: '按问题空间浏览 GopherAtlas 专题，快速找到合适的 Go 阅读路径。',
+      title: `\u8bdd\u9898\u4e13\u533a | ${SITE_NAME}`,
+      description: '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u4e13\u9898\u5206\u533a\u5165\u624b\u3002',
       pageId: 'topics'
     },
     `
       <div class="${PAGE_SHELL_CLASS} space-y-10 md:space-y-14">
         ${renderPageHero(
           'Topics',
-          '专题总览',
-          '从问题空间开始浏览，而不是从散落链接开始。所有独立专题都集中在这里，适合先建立阅读顺序，再进入具体文章。',
-          `<a class="${BUTTON_PRIMARY_CLASS}" href="/articles/">去文章页筛选</a>
-           <a class="${BUTTON_GHOST_CLASS}" href="/contribute/">推荐新文章</a>`
+          '\u8bdd\u9898\u4e13\u533a',
+          '\u4e0d\u77e5\u9053\u60f3\u8bfb\u4e9b\u4ec0\u4e48\u6587\u7ae0\uff1f\u4e0d\u59a8\u4ece\u4e13\u9898\u5206\u533a\u5165\u624b\u3002',
+          `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
+           <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u94fe\u63a5</button>`
         )}
         <section class="space-y-6">
           <div class="space-y-3">
             <span class="${SECTION_EYEBROW_CLASS}">Directory</span>
-            <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.02] tracking-[-0.04em] text-[color:var(--text)]">${topics.length} 个主题，${articles.length} 篇精选文章</h2>
-            <p class="max-w-3xl text-base leading-8 text-[color:var(--text-soft)]">每个专题都带有导读、推荐阅读顺序和相关文章，方便你按主题逐步深入。</p>
+            <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.02] tracking-[-0.04em] text-[color:var(--text)]">${topics.length} \u4e2a\u8bdd\u9898 - ${articles.length} \u7bc7\u7cbe\u9009\u6587\u7ae0</h2>
+            <p class="max-w-3xl text-base leading-8 text-[color:var(--text-soft)]">\u6bcf\u4e2a\u8bdd\u9898\u90fd\u5e26\u6709\u5bfc\u8bfb\uff0c\u65b9\u4fbf\u4f60\u5feb\u901f\u878d\u5165\u8bdd\u9898\u3002</p>
           </div>
           ${renderTopicCards(topics)}
-        </section>
-        <section class="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">Next step</span>
-            <h2 class="font-display text-[clamp(1.8rem,2.6vw,2.6rem)] leading-[1.05] tracking-[-0.04em] text-[color:var(--text)]">需要按标签、评级或语言继续筛选？</h2>
-            <p class="max-w-2xl text-base leading-8 text-[color:var(--text-soft)]">专题页用来确定你先想理解的问题空间，更细的组合筛选则留给文章页完成。</p>
-            <a class="${BUTTON_GHOST_CLASS}" href="/articles/">打开文章页</a>
-          </article>
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">Rating</span>
-            <h2 class="font-display text-[clamp(1.8rem,2.6vw,2.5rem)] leading-[1.05] tracking-[-0.04em] text-[color:var(--text)]">评级表达推荐优先级，不是绝对分数</h2>
-            <p class="text-base leading-8 text-[color:var(--text-soft)]">如果你想快速抓到基础且高价值的内容，可以先看 S+ 和 S 条目。</p>
-            ${renderRatingLegend()}
-          </article>
         </section>
       </div>
     `,
@@ -454,26 +464,26 @@ function renderArticlesPage(articles: ArticleItem[]) {
 
   return renderShell(
     {
-      title: `全部文章 | ${SITE_NAME}`,
-      description: '搜索、筛选和排序所有已收录的 Go 高质量文章。',
+      title: `\u5168\u90e8\u6587\u7ae0 | ${SITE_NAME}`,
+      description: '\u641c\u7d22\u3001\u7b5b\u9009\u548c\u6392\u5e8f\u6240\u6709\u5df2\u6536\u5f55\u7684 Go \u9ad8\u8d28\u91cf\u6587\u7ae0\u3002',
       pageId: 'articles'
     },
     `
       <div class="${PAGE_SHELL_CLASS} space-y-8 md:space-y-10">
         ${renderPageHero(
           'Articles',
-          '全部文章',
-          '默认按推荐优先级排序。你可以按关键词、分类、标签、评级和语言组合筛选，也可以直接复制当前筛选状态分享给别人。',
+          '\u5168\u90e8\u6587\u7ae0',
+          '\u8fd9\u91cc\u6536\u5f55\u4e86\u5927\u91cf\u7684\u4f18\u8d28\u6587\u7ae0\uff0c\u4f60\u53ef\u4ee5\u5728\u9605\u8bfb\u4e2d\u501f\u9274\u4ed6\u4eba\u7684\u601d\u8def\u3001\u63d0\u5347\u81ea\u5df1\u7684\u4ee3\u7801\u54c1\u5473\u6216\u6293\u4f4f\u7075\u611f\u7684\u706b\u82b1\u3002',
           renderHeroStats(articles, [], groupTagsByCount(articles))
         )}
         ${renderFilterPanel(stats.categories, groupTagsByCount(articles))}
         <section class="space-y-6" data-results-section>
           <div class="flex flex-col gap-4 border-b border-[color:var(--line)] pb-5 md:flex-row md:items-end md:justify-between">
-            <p class="text-base text-[color:var(--text-soft)]">当前共有 <strong class="font-semibold text-[color:var(--text)]" data-result-count>${sorted.length}</strong> 篇命中</p>
-            <a class="${BUTTON_GHOST_CLASS}" href="/">返回首页</a>
+            <p class="text-base text-[color:var(--text-soft)]">\u5f53\u524d\u5171\u6709 <strong class="font-semibold text-[color:var(--text)]" data-result-count>${sorted.length}</strong> \u7bc7\u547d\u4e2d</p>
+            <a class="${BUTTON_RECT_GHOST_CLASS}" href="/">\u8fd4\u56de\u9996\u9875</a>
           </div>
           <div data-article-results>
-            ${renderArticleGrid(paginated.items, '暂无符合条件的文章。')}
+            ${renderArticleGrid(paginated.items, '\u6682\u65e0\u7b26\u5408\u6761\u4ef6\u7684\u6587\u7ae0\u3002')}
           </div>
           <div data-pagination>
             ${renderPagination(paginated.currentPage, paginated.totalPages, DEFAULT_SEARCH_STATE)}
@@ -490,10 +500,7 @@ function renderArticlesPage(articles: ArticleItem[]) {
 }
 
 function renderTopicPage(topic: TopicViewModel, allTopics: TopicViewModel[]) {
-  const orderedArticles = [
-    ...topic.readingOrder.map((id) => topic.articles.find((article) => article.id === id)).filter(Boolean),
-    ...topic.articles.filter((article) => !topic.readingOrder.includes(article.id))
-  ] as ArticleItem[]
+  const sortedTopicArticles = sortArticles(topic.articles, 'recommended')
   const relatedTopics = topic.relatedTopics.map((slug) => allTopics.find((item) => item.slug === slug)).filter(Boolean) as TopicViewModel[]
 
   return renderShell(
@@ -508,37 +515,33 @@ function renderTopicPage(topic: TopicViewModel, allTopics: TopicViewModel[]) {
           'Topic',
           escapeHtml(topic.title),
           escapeHtml(topic.summary),
-          `<a class="${BUTTON_PRIMARY_CLASS}" href="/articles/?category=${encodeURIComponent(topic.articles[0]?.category ?? topic.title)}">在文章页筛选</a>
-           <button class="${BUTTON_GHOST_CLASS}" type="button" data-copy-current-link>复制专题链接</button>`
+          `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/?category=${encodeURIComponent(topic.articles[0]?.category ?? topic.title)}">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
+           <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u4e13\u9898\u94fe\u63a5</button>`
         )}
-        <section class="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)]">
+        <section>
           <article class="${PANEL_CLASS} markdown-body px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">专题导读</span>
-            ${topic.body}
+            <span class="block text-[0.92rem] font-medium tracking-[0.08em] text-[color:var(--text-soft)]">\u4e13\u9898\u5bfc\u8bfb</span>
+            <div class="mt-5">
+              ${topic.body}
+            </div>
           </article>
-          <aside class="${PANEL_CLASS} px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">推荐阅读顺序</span>
-            <ol class="mt-5 space-y-3">
-              ${orderedArticles.map((article) => `<li class="text-base leading-7 text-[color:var(--text-soft)]"><a class="transition hover:text-[color:var(--accent-strong)]" href="${article.url}" target="_blank" rel="noreferrer">${escapeHtml(article.title)}</a></li>`).join('')}
-            </ol>
-          </aside>
         </section>
         <section class="space-y-6">
           <div class="space-y-3">
-            <span class="${SECTION_EYEBROW_CLASS}">专题文章</span>
-            <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.04] tracking-[-0.04em] text-[color:var(--text)]">${topic.articles.length} 篇精选文章</h2>
+            <span class="block text-[0.92rem] font-medium tracking-[0.08em] text-[color:var(--text-soft)]">\u4e13\u9898\u6587\u7ae0</span>
+            <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.04] tracking-[-0.04em] text-[color:var(--text)]">${topic.articles.length} \u7bc7\u7cbe\u9009\u6587\u7ae0</h2>
           </div>
-          ${renderArticleGrid(orderedArticles, '当前专题暂无文章。')}
+          ${renderArticleGrid(sortedTopicArticles, '\u5f53\u524d\u4e13\u9898\u6682\u65e0\u6587\u7ae0\u3002')}
         </section>
         <section class="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">标签聚合</span>
+            <span class="${SECTION_EYEBROW_CLASS}">\u6807\u7b7e\u805a\u5408</span>
             ${renderTagLinks(groupTagsByCount(topic.articles), 18)}
           </article>
           <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">相关专题</span>
+            <span class="${SECTION_EYEBROW_CLASS}">\u76f8\u5173\u4e13\u9898</span>
             <div class="grid gap-3 text-base text-[color:var(--text-soft)]">
-              ${relatedTopics.map((item) => `<a class="transition hover:text-[color:var(--accent-strong)]" href="/topics/${item.slug}/">${escapeHtml(item.title)}</a>`).join('') || '<span>当前暂无相关专题。</span>'}
+              ${relatedTopics.map((item) => `<a class="transition hover:text-[color:var(--accent-strong)]" href="/topics/${item.slug}/">${escapeHtml(item.title)}</a>`).join('') || '<span>\u5f53\u524d\u6682\u65e0\u76f8\u5173\u4e13\u9898\u3002</span>'}
             </div>
           </article>
         </section>
@@ -549,12 +552,10 @@ function renderTopicPage(topic: TopicViewModel, allTopics: TopicViewModel[]) {
 }
 
 function renderTagPage(tagName: string, articles: ArticleItem[]): string {
-  const relatedCategories = [...new Set(articles.map((article) => article.category))]
-
   return renderShell(
     {
-      title: `标签：${tagName} | ${SITE_NAME}`,
-      description: `查看与 ${tagName} 相关的 Go 精选文章。`,
+      title: `\u6807\u7b7e\uff1a${tagName} | ${SITE_NAME}`,
+      description: `\u67e5\u770b\u4e0e ${tagName} \u76f8\u5173\u7684 Go \u7cbe\u9009\u6587\u7ae0\u3002`,
       pageId: 'tag'
     },
     `
@@ -562,25 +563,12 @@ function renderTagPage(tagName: string, articles: ArticleItem[]): string {
         ${renderPageHero(
           'Tag',
           escapeHtml(tagName),
-          `当前标签下共收录 ${articles.length} 篇文章，适合从一个具体问题切入继续延展阅读。`,
-          `<a class="${BUTTON_PRIMARY_CLASS}" href="/articles/?tags=${encodeURIComponent(tagName)}">在文章页筛选</a>
-           <button class="${BUTTON_GHOST_CLASS}" type="button" data-copy-current-link>复制标签链接</button>`
+          `\u5f53\u524d\u6807\u7b7e\u4e0b\u5171\u6536\u5f55 ${articles.length} \u7bc7\u6587\u7ae0`,
+          `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/?tags=${encodeURIComponent(tagName)}">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
+           <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u6807\u7b7e\u94fe\u63a5</button>`
         )}
-        <section class="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">关联分类</span>
-            <div class="flex flex-wrap gap-2.5">
-              ${relatedCategories.map((category) => `<a class="${BUTTON_GHOST_CLASS}" href="/articles/?category=${encodeURIComponent(category)}">${escapeHtml(category)}</a>`).join('')}
-            </div>
-          </article>
-          <article class="${PANEL_CLASS} space-y-4 px-6 py-6 md:px-8 md:py-8">
-            <span class="${SECTION_EYEBROW_CLASS}">继续探索</span>
-            <p class="text-base leading-8 text-[color:var(--text-soft)]">如果你想叠加更多条件，建议切换到文章页继续组合关键词、评级、语言与多个标签。</p>
-            <a class="${BUTTON_GHOST_CLASS}" href="/articles/?tags=${encodeURIComponent(tagName)}">打开高级筛选</a>
-          </article>
-        </section>
         <section>
-          ${renderArticleGrid(sortArticles(articles, 'recommended'), '当前标签暂无文章。')}
+          ${renderArticleGrid(sortArticles(articles, 'recommended'), '\u5f53\u524d\u6807\u7b7e\u6682\u65e0\u6587\u7ae0\u3002')}
         </section>
       </div>
     `,
