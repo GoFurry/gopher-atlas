@@ -57,6 +57,7 @@ type TopicViewModel = TopicDocument & {
 
 const CURRENT_YEAR = new Date().getFullYear()
 const LOGO_SRC = '/src/static/images/logo.png'
+const LOGO_256_SRC = '/logo-256.png'
 const GITHUB_ICON_DARK_SRC = '/src/static/svgs/logo-github-dark.svg'
 const GITHUB_ICON_LIGHT_SRC = '/src/static/svgs/logo-github-light.svg'
 const THEME_ICON_MOON_SRC = '/src/static/svgs/moon.svg'
@@ -118,18 +119,37 @@ function renderShell(meta: Meta, content: string, pathname: string, pageData?: u
     <title>${escapeHtml(meta.title)}</title>
     <meta name="description" content="${escapeHtml(meta.description)}" />
     <meta name="theme-color" content="#11161a" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:title" content="${escapeHtml(meta.title)}" />
     <meta property="og:description" content="${escapeHtml(meta.description)}" />
     <meta property="og:url" content="${canonical}" />
-    <meta property="og:image" content="${SITE_URL}/logo.png" />
+    <meta property="og:image" content="${SITE_URL}/logo-256.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(meta.title)}" />
     <meta name="twitter:description" content="${escapeHtml(meta.description)}" />
-    <meta name="twitter:image" content="${SITE_URL}/logo.png" />
+    <meta name="twitter:image" content="${SITE_URL}/logo-256.png" />
     <link rel="canonical" href="${canonical}" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json">
+      {${JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}${LOGO_256_SRC}`,
+        sameAs: [GITHUB_URL]
+      }).slice(1, -1)}}
+    </script>
+    <script type="application/ld+json">
+      {${JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE_NAME,
+        url: SITE_URL
+      }).slice(1, -1)}}
+    </script>
     <script>
       (() => {
         const key = 'gopheratlas-theme';
@@ -178,7 +198,7 @@ function renderHeader(pathname: string): string {
           <img class="h-9 w-9 object-contain" src="${LOGO_SRC}" alt="GopherAtlas logo" />
           <span class="min-w-0">
             <strong class="block truncate text-[0.98rem] font-semibold tracking-[0.02em] text-[color:var(--text)]">${SITE_NAME}</strong>
-            <small class="hidden truncate text-[0.74rem] tracking-[0.08em] text-[color:var(--text-muted)] md:block">\u9762\u5411 Go \u8bed\u8a00\u5f00\u53d1\u8005\u7684\u4f11\u95f2\u8bfb\u7269</small>
+            <small class="hidden truncate text-[0.74rem] tracking-[0.08em] text-[color:var(--text-muted)] md:block">高质量 Go 技术文章精选导航</small>
           </span>
         </a>
         <button class="inline-flex min-h-10 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] md:hidden" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
@@ -415,7 +435,7 @@ function renderHomePage(): string {
             <span class="inline-flex items-center gap-2 font-mono text-[0.9rem] tracking-[0.12em] text-[color:var(--text-muted)] opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:80ms] md:text-[1rem]">Golang or go home?</span>
             <div class="space-y-6 opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:180ms]">
               <h1 class="home-wordmark text-[clamp(3.3rem,8.5vw,8.05rem)] leading-[0.97] text-[color:var(--text)]">${SITE_NAME}</h1>
-              <p class="max-w-2xl text-[1rem] leading-8 text-[color:var(--text-soft)] md:text-[1.05rem] md:leading-9">\u9762\u5411Go\u8bed\u8a00\u5f00\u53d1\u8005\u7684\u6280\u672f\u56fe\u9274\uff0c\u6574\u7406\u4e86\u5f53\u4e0b\u6700\u503c\u5f97\u9605\u8bfb\u7684\u9ad8\u8d28\u91cf\u6280\u672f\u535a\u5ba2\u3002</p>
+              <p class="max-w-2xl text-[1rem] leading-8 text-[color:var(--text-soft)] md:text-[1.05rem] md:leading-9">精选高质量 Go 技术文章，按专题、标签与评级整理，帮助开发者更快找到值得阅读的内容。</p>
             </div>
             <div class="flex flex-wrap gap-3">
               <a class="${HOME_BUTTON_PRIMARY_CLASS} opacity-0 [animation:hero-rise_780ms_cubic-bezier(0.22,1,0.36,1)_forwards] [animation-delay:300ms]" href="/articles/">\u6d4f\u89c8\u5168\u90e8\u6587\u7ae0</a>
