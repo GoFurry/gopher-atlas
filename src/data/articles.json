@@ -10,8 +10,8 @@
       { "label": "Go GC 指南", "url": "https://go.dev/doc/gc-guide" },
       { "label": "AVX-512 扫描内核源码", "url": "https://cs.opensource.google/go/go/+/master:src/internal/runtime/gc/scan/scan_amd64.s" }
     ],
-    "author": "Michael Knyszek & Austin Clements",
-    "source": "旅途散记",
+    "author": "旅途散记",
+    "source": "微信公众号",
     "publishedAt": "2025-10-29",
     "addedAt": "2026-04-18",
     "category": "Go New Features",
@@ -33,8 +33,8 @@
       { "label": "主要参考", "url": "https://go.dev/blog/allocation-optimizations" },
       { "label": "Go 逃逸分析指南", "url": "https://go.dev/doc/gc-guide#Escape_analysis" }
     ],
-    "author": "Keith Randall",
-    "source": "旅途散记",
+    "author": "旅途散记",
+    "source": "微信公众号",
     "publishedAt": "2026-02-27",
     "addedAt": "2026-04-18",
     "category": "Go New Features",
@@ -46,5 +46,34 @@
     "reason": "它把“栈分配更便宜”这件大家都知道的事，延展成了对现代 Go 编译器优化路径的完整解读，尤其适合放在新特性专题里，帮助读者建立对切片、逃逸分析和分配成本的更立体理解。",
     "mustRead": true,
     "featured": true
+  },
+  {
+    "id": "go-framework-benchmark-gnet-vs-fiber-vs-fasthttp-vs-net-http",
+    "title": "最快 Go 框架性能比拼：gnet vs fiber vs fasthttp vs net/http",
+    "url": "https://mp.weixin.qq.com/s/OqnxWo1x2MULUmGamRnSTQ",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-14",
+    "addedAt": "2026-04-18",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "web-framework", "fiber", "fasthttp", "gnet", "net-http", "postgresql"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 gnet、Fiber、fasthttp 和 net/http 的两组实测，对比它们在延迟、吞吐、CPU、内存、可用性与数据库场景下的表现差异。",
+    "reason": "这篇文章适合作为性能对比专题的起点，因为它不只给出跑分结果，还展示了不同框架在高负载和接入 PostgreSQL 后的行为变化，能够帮助读者建立“延迟、吞吐与资源消耗是多维取舍”的基本认知。",
+    "originalUrl": "https://www.youtube.com/watch?v=iPnMPnelWOE",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=iPnMPnelWOE"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/229"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
   }
 ]

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { filterArticles, getArticleStats, paginateArticles, sortArticles } from '../src/lib/articles'
+import { filterArticles, getArticleStats, getCategorySlug, paginateArticles, sortArticles } from '../src/lib/articles'
 import { loadArticles } from '../src/lib/content'
 
 describe('articles data and list helpers', () => {
@@ -8,9 +8,16 @@ describe('articles data and list helpers', () => {
   it('validates seed articles and derives categories/tags', () => {
     const stats = getArticleStats(articles)
 
-    expect(articles.length).toBe(2)
+    expect(articles.length).toBe(3)
     expect(stats.categories).toContain('Go New Features')
+    expect(stats.categories).toContain('Benchmarking & Comparisons')
     expect(stats.tags).toContain('gc')
+    expect(stats.tags).toContain('benchmark')
+  })
+
+  it('maps category names to topic slugs consistently', () => {
+    expect(getCategorySlug('Go New Features')).toBe('go-new-features')
+    expect(getCategorySlug('Benchmarking & Comparisons')).toBe('benchmarking-and-comparisons')
   })
 
   it('applies default recommended order with featured and must-read first', () => {

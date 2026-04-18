@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import {
   DEFAULT_SEARCH_STATE,
   filterArticles,
+  getCategorySlug,
   getArticleStats,
   groupTagsByCount,
   paginateArticles,
@@ -36,7 +37,6 @@ import {
   SORT_OPTION_LABELS,
   TOPIC_CATEGORY_SLUGS,
   formatDate,
-  slugify,
   toCanonicalUrl,
   type Rating
 } from '../src/lib/site'
@@ -647,7 +647,7 @@ async function main() {
       throw new Error(`Missing topic document for slug: ${slug}`)
     }
 
-    const topicArticles = articles.filter((article) => slugify(article.category) === slug)
+    const topicArticles = articles.filter((article) => getCategorySlug(article.category) === slug)
     return {
       ...topic,
       articles: sortArticles(topicArticles, 'recommended')

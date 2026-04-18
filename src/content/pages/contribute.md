@@ -67,7 +67,7 @@ description: 了解如何推荐文章、补全文章元数据，并通过 Issue 
 
 - `author`
   - 作者名
-  - 可填写单个作者或作者列表
+  - 可填写单个作者，多个作者请合并写成一个字符串，例如 `Alice & Bob` 或 `Alice, Bob, Charlie`
 - `source`
   - 来源名称
   - 例如 `The Go Blog`、`Cloudflare Blog`

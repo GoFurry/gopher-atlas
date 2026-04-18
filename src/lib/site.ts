@@ -5,12 +5,19 @@ export const GITHUB_URL = 'https://github.com/GoFurry/gopher-atlas'
 export const PAGE_SIZE = 12
 
 export const CATEGORY_ORDER = [
-  'Go New Features'
+  'Go New Features',
+  'Benchmarking & Comparisons'
 ] as const
 
 export const TOPIC_CATEGORY_SLUGS = [
-  'go-new-features'
+  'go-new-features',
+  'benchmarking-and-comparisons'
 ] as const
+
+export const CATEGORY_SLUG_MAP = {
+  'Go New Features': 'go-new-features',
+  'Benchmarking & Comparisons': 'benchmarking-and-comparisons'
+} as const
 
 export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C'] as const
 export const SORT_OPTIONS = [

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import {
   CATEGORY_ORDER,
+  CATEGORY_SLUG_MAP,
   PAGE_SIZE,
   RATING_ORDER,
   SORT_OPTIONS,
@@ -232,7 +233,7 @@ export function getArticleStats(items: ArticleItem[]) {
 }
 
 export function getCategorySlug(category: string): string {
-  return slugify(category)
+  return CATEGORY_SLUG_MAP[category as keyof typeof CATEGORY_SLUG_MAP] ?? slugify(category)
 }
 
 export function toUniqueList(value: string | null): string[] {

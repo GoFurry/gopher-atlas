@@ -6,14 +6,23 @@
   <url><loc>https://gopheratlas.com/about</loc></url>
   <url><loc>https://gopheratlas.com/contribute</loc></url>
   <url><loc>https://gopheratlas.com/topics/go-new-features</loc></url>
+  <url><loc>https://gopheratlas.com/topics/benchmarking-and-comparisons</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-25</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-26</loc></url>
   <url><loc>https://gopheratlas.com/tags/memory</loc></url>
   <url><loc>https://gopheratlas.com/tags/allocation</loc></url>
+  <url><loc>https://gopheratlas.com/tags/benchmark</loc></url>
+  <url><loc>https://gopheratlas.com/tags/comparison</loc></url>
   <url><loc>https://gopheratlas.com/tags/compiler</loc></url>
+  <url><loc>https://gopheratlas.com/tags/fasthttp</loc></url>
+  <url><loc>https://gopheratlas.com/tags/fiber</loc></url>
   <url><loc>https://gopheratlas.com/tags/gc</loc></url>
+  <url><loc>https://gopheratlas.com/tags/gnet</loc></url>
   <url><loc>https://gopheratlas.com/tags/heap</loc></url>
+  <url><loc>https://gopheratlas.com/tags/net-http</loc></url>
   <url><loc>https://gopheratlas.com/tags/performance</loc></url>
+  <url><loc>https://gopheratlas.com/tags/postgresql</loc></url>
   <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
   <url><loc>https://gopheratlas.com/tags/stack</loc></url>
+  <url><loc>https://gopheratlas.com/tags/web-framework</loc></url>
 </urlset>
