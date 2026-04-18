@@ -309,10 +309,12 @@
     position: relative;
     z-index: 1;
     width: min(58%, 14.5rem);
+    transform-origin: center;
+    will-change: transform;
     filter:
       drop-shadow(0 26px 36px rgba(0, 0, 0, 0.18))
       drop-shadow(0 0 18px color-mix(in srgb, var(--accent-glow) 8%, transparent));
-    animation: hero-float 10.8s ease-in-out infinite;
+    animation: hero-float 18s ease-in-out infinite;
   }
 
   .markdown-body {
@@ -412,11 +414,11 @@
 @keyframes hero-float {
   0%,
   100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) rotate(-8deg) scale(1);
   }
 
   50% {
-    transform: translateY(-12px) scale(1.015);
+    transform: translateY(-12px) rotate(8deg) scale(1.015);
   }
 }
 

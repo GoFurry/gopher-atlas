@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">GopherAtlas Logo 256</title>
+  <desc id="desc">A futuristic compass logo in blue and slate tones for GopherAtlas.</desc>
+  <defs>
+    <linearGradient id="ring" x1="28" y1="28" x2="228" y2="228" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#dbe8f7"/>
+      <stop offset="0.45" stop-color="#7b8da8"/>
+      <stop offset="1" stop-color="#31455f"/>
+    </linearGradient>
+    <linearGradient id="needleBlue" x1="96" y1="48" x2="184" y2="136" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8be0ff"/>
+      <stop offset="0.45" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="needleLight" x1="72" y1="184" x2="136" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="outerGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feColorMatrix in="glow" type="matrix"
+        values="0 0 0 0 0.22
+                0 0 0 0 0.74
+                0 0 0 0 0.97
+                0 0 0 0.55 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="128" cy="128" r="108" fill="#0f172a"/>
+  <circle cx="128" cy="128" r="118" fill="url(#coreGlow)"/>
+
+  <circle cx="128" cy="128" r="94" fill="none" stroke="url(#ring)" stroke-width="14"/>
+  <circle cx="128" cy="128" r="69" fill="none" stroke="#334155" stroke-width="5" opacity="0.9"/>
+  <circle cx="128" cy="128" r="112" fill="none" stroke="#38bdf8" stroke-opacity="0.18" stroke-width="6"/>
+
+  <g stroke-linecap="round" opacity="0.95">
+    <line x1="128" y1="33" x2="128" y2="54" stroke="#e2e8f0" stroke-width="8"/>
+    <line x1="223" y1="128" x2="202" y2="128" stroke="#94a3b8" stroke-width="7"/>
+    <line x1="128" y1="223" x2="128" y2="202" stroke="#94a3b8" stroke-width="7"/>
+    <line x1="33" y1="128" x2="54" y2="128" stroke="#94a3b8" stroke-width="7"/>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <path d="M128 128 L196 60 L150 158 Z" fill="url(#needleBlue)"/>
+    <path d="M128 128 L60 196 L106 98 Z" fill="url(#needleLight)"/>
+  </g>
+
+  <g filter="url(#outerGlow)">
+    <circle cx="128" cy="128" r="14" fill="#e2e8f0" stroke="#475569" stroke-width="4"/>
+    <circle cx="128" cy="128" r="5.5" fill="#0f172a"/>
+  </g>
+</svg>
