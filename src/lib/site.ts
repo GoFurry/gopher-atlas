@@ -5,12 +5,10 @@ export const GITHUB_URL = 'https://github.com/GoFurry/gopher-atlas'
 export const PAGE_SIZE = 12
 
 export const CATEGORY_ORDER = [
-  'Web Development',
   'Go New Features'
 ] as const
 
 export const TOPIC_CATEGORY_SLUGS = [
-  'web-development',
   'go-new-features'
 ] as const
 

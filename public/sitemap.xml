@@ -5,36 +5,15 @@
   <url><loc>https://gopheratlas.com/topics</loc></url>
   <url><loc>https://gopheratlas.com/about</loc></url>
   <url><loc>https://gopheratlas.com/contribute</loc></url>
-  <url><loc>https://gopheratlas.com/topics/web-development</loc></url>
   <url><loc>https://gopheratlas.com/topics/go-new-features</loc></url>
-  <url><loc>https://gopheratlas.com/tags/api</loc></url>
-  <url><loc>https://gopheratlas.com/tags/compatibility</loc></url>
-  <url><loc>https://gopheratlas.com/tags/encoding</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-25</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-26</loc></url>
-  <url><loc>https://gopheratlas.com/tags/json</loc></url>
-  <url><loc>https://gopheratlas.com/tags/language-basics</loc></url>
   <url><loc>https://gopheratlas.com/tags/memory</loc></url>
-  <url><loc>https://gopheratlas.com/tags/net-http</loc></url>
-  <url><loc>https://gopheratlas.com/tags/observability</loc></url>
-  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
   <url><loc>https://gopheratlas.com/tags/allocation</loc></url>
   <url><loc>https://gopheratlas.com/tags/compiler</loc></url>
   <url><loc>https://gopheratlas.com/tags/gc</loc></url>
-  <url><loc>https://gopheratlas.com/tags/generics</loc></url>
   <url><loc>https://gopheratlas.com/tags/heap</loc></url>
-  <url><loc>https://gopheratlas.com/tags/iterators</loc></url>
-  <url><loc>https://gopheratlas.com/tags/logging</loc></url>
-  <url><loc>https://gopheratlas.com/tags/loopvar</loc></url>
-  <url><loc>https://gopheratlas.com/tags/modules</loc></url>
-  <url><loc>https://gopheratlas.com/tags/range</loc></url>
-  <url><loc>https://gopheratlas.com/tags/routing</loc></url>
+  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
   <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
-  <url><loc>https://gopheratlas.com/tags/serve-mux</loc></url>
-  <url><loc>https://gopheratlas.com/tags/slog</loc></url>
   <url><loc>https://gopheratlas.com/tags/stack</loc></url>
-  <url><loc>https://gopheratlas.com/tags/testing</loc></url>
-  <url><loc>https://gopheratlas.com/tags/tracing</loc></url>
-  <url><loc>https://gopheratlas.com/tags/versioning</loc></url>
-  <url><loc>https://gopheratlas.com/tags/web-development</loc></url>
 </urlset>
