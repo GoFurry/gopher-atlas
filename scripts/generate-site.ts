@@ -571,7 +571,7 @@ function renderTopicPage(topic: TopicViewModel) {
             <div class="space-y-4">
               <div class="flex h-10 items-center justify-between gap-3">
                 <h2 class="min-w-0 text-[1rem] font-medium leading-6 tracking-[0.01em] text-[color:var(--text)] md:text-[1.05rem]">\u63a8\u8350\u9605\u8bfb - \u5171 ${readingOrderArticles.length} \u7bc7</h2>
-                ${readingOrderArticles.length > 3 ? `
+                ${readingOrderTotalPages > 1 ? `
                 <div class="flex shrink-0 items-center gap-2" data-reading-order-controls>
                   <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-40" type="button" data-reading-order-prev>\u4e0a\u4e00\u9875</button>
                   <span class="min-w-12 text-center text-xs tracking-[0.08em] text-[color:var(--text-muted)]" data-reading-order-page>1 / ${readingOrderTotalPages}</span>
