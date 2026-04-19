@@ -56,7 +56,7 @@ export const DEFAULT_SEARCH_STATE: ArticleSearchState = {
   category: '',
   tags: [],
   rating: [],
-  sort: 'recommended',
+  sort: 'published-date',
   lang: '',
   page: 1
 }

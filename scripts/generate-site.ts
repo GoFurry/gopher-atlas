@@ -385,7 +385,7 @@ function renderFilterPanel(categories: string[], tags: Array<{ name: string; cou
           </label>
           ${renderCustomSelect('category', '\u5206\u7c7b', '\u5168\u90e8\u5206\u7c7b', categoryOptions)}
           ${renderCustomSelect('lang', '\u8bed\u8a00', '\u5168\u90e8\u8bed\u8a00', languageOptions)}
-          ${renderCustomSelect('sort', '\u6392\u5e8f', SORT_OPTION_LABELS.recommended, sortOptions)}
+          ${renderCustomSelect('sort', '\u6392\u5e8f', SORT_OPTION_LABELS[DEFAULT_SEARCH_STATE.sort], sortOptions)}
         </div>
         <div class="grid gap-6 border-t border-[color:var(--line)] pt-6">
           <fieldset class="space-y-3">
@@ -490,7 +490,7 @@ function renderTopicsIndexPage(topics: TopicViewModel[], articles: ArticleItem[]
 
 function renderArticlesPage(articles: ArticleItem[], topics: TopicViewModel[]) {
   const stats = getArticleStats(articles)
-  const sorted = sortArticles(filterArticles(articles, DEFAULT_SEARCH_STATE), 'recommended')
+  const sorted = sortArticles(filterArticles(articles, DEFAULT_SEARCH_STATE), DEFAULT_SEARCH_STATE.sort)
   const paginated = paginateArticles(sorted, 1)
 
   return renderShell(
