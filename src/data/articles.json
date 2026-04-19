@@ -12,7 +12,7 @@
     ],
     "author": "旅途散记",
     "source": "微信公众号",
-    "publishedAt": "2025-10-29",
+    "publishedAt": "2026-04-16",
     "addedAt": "2026-04-18",
     "category": "Go New Features",
     "tags": ["gc", "runtime", "memory", "performance", "go1.25", "go1.26"],
@@ -179,5 +179,164 @@
     ],
     "featured": true,
     "mustRead": true
+  },
+  {
+    "id": "go-125-flight-recorder",
+    "title": "Go 1.25 新特性：Flight Recorder - 像黑匣子一样捕捉线上 Bug",
+    "url": "https://mp.weixin.qq.com/s/q1COFwVIq21uyWI3z6muEQ",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2026-04-14",
+    "addedAt": "2026-04-20",
+    "category": "Go New Features",
+    "tags": ["go1.25", "flight-recorder", "runtime-trace", "diagnostics", "observability", "performance"],
+    "rating": "A+",
+    "language": "zh",
+    "difficulty": "intermediate",
+    "summary": "围绕 Go 1.25 新增的 Flight Recorder，讲解它如何用环形缓冲区持续保留最近几秒的追踪数据，并在异常发生时精准导出现场。",
+    "reason": "这篇文章很适合作为 Go 1.25 新特性的代表性读物，因为它不只介绍 API 用法，还通过一个真实的锁阻塞案例把运行时追踪、线上诊断和低开销可观测性串了起来，实用价值很强。",
+    "originalUrl": "https://go.dev/blog/flight-recorder",
+    "links": [
+      {
+        "label": "官方博客原文",
+        "url": "https://go.dev/blog/flight-recorder"
+      },
+      {
+        "label": "runtime/trace 文档",
+        "url": "https://pkg.go.dev/runtime/trace"
+      },
+      {
+        "label": "Go 诊断工具总览",
+        "url": "https://go.dev/doc/diagnostics"
+      },
+      {
+        "label": "gotraceui",
+        "url": "https://gotraceui.dev/"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "go-118-slice-growth-strategy",
+    "title": "Go 1.18+ slice 扩容机制详解",
+    "url": "https://mp.weixin.qq.com/s/4S76IJuSPVartDh_l6d_6Q",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2026-01-12",
+    "addedAt": "2026-04-20",
+    "category": "Language Basics",
+    "tags": ["slice", "append", "memory", "allocation", "runtime", "go1.18", "language-basics"],
+    "rating": "A+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Go 1.18 之后的 slice 扩容策略变化，解释阈值调整、平滑增长公式、内存对齐处理，以及它对扩容次数和内存浪费的实际影响。",
+    "reason": "这篇文章适合作为理解 slice 行为的进阶读物，因为它不只停留在“append 会触发扩容”这一层，而是把 runtime 中的扩容逻辑、版本差异和真实场景下的性能取舍都串了起来，读完之后再看内存优化和逃逸分析会更顺手。",
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "http2-vs-http3-performance-benchmark",
+    "title": "性能比拼：HTTP/2 vs. HTTP/3",
+    "url": "https://mp.weixin.qq.com/s/N7FxGctR2NfWQxFOqO4LcQ",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-05-07",
+    "addedAt": "2026-04-20",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "http2", "http3", "quic", "nginx", "web-performance"],
+    "rating": "C+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 HTTP/2 和 HTTP/3 的实测，对比它们在真实页面加载场景下的表现，并结合 Nginx 的早期 HTTP/3 实现分析差异来源。",
+    "reason": "这篇文章有参考价值，适合作为了解 HTTP/3 早期落地现状的补充材料。它的价值更多在于展示协议实现成熟度对结果的影响，而不是给出一个稳定、可泛化的性能结论。",
+    "originalUrl": "https://www.youtube.com/watch?v=-0yu_zOFilg",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=-0yu_zOFilg"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/148"
+      }
+    ]
+  },
+  {
+    "id": "nginx-vs-caddy-performance",
+    "title": "性能比拼：Nginx vs Caddy",
+    "url": "https://mp.weixin.qq.com/s/xMv_7R-sWftQj0wIlHeJdA",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-27",
+    "addedAt": "2026-04-20",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "nginx", "caddy", "web-server", "reverse-proxy", "load-balancer", "web-performance"],
+    "rating": "A+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Nginx 与 Caddy 在静态站点和反向代理两种场景下的实测，对比它们在延迟、吞吐、CPU、内存、可用性与网络流量上的差异。",
+    "reason": "这篇文章很适合作为 Web 服务器对比专题的重点内容，因为它不仅比较了单纯的静态内容服务，还覆盖了更贴近生产环境的反向代理和负载均衡场景，能帮助读者理解“易用性”和“性能上限”之间的实际取舍。"
+  },
+  {
+    "id": "nginx-vs-apache-performance",
+    "title": "性能比拼：Nginx vs Apache",
+    "url": "https://mp.weixin.qq.com/s/bHzrIb-Twx7SPsUVS-_DUg",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-23",
+    "addedAt": "2026-04-20",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "nginx", "apache", "web-server", "reverse-proxy", "http2", "https", "web-performance"],
+    "rating": "A+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Nginx 与 Apache 在静态网站、HTTPS 与反向代理三种场景下的实测，对比它们在延迟、吞吐、CPU、内存、可用性与网络流量上的差异。",
+    "reason": "这篇文章很适合作为 Web 服务器对比专题的重点内容，因为它没有停留在单一静态场景，而是把 HTTP、HTTPS 和反向代理三类更接近真实生产环境的负载放在一起比较，也呈现了 Apache 在部分动态代理场景下并不弱势的结论，信息密度很高。",
+    "originalUrl": "https://www.youtube.com/watch?v=UGp4LmocE7o",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=UGp4LmocE7o"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/219"
+      }
+    ],
+    "featured": true,
+    "mustRead": true
+  },
+  {
+    "id": "go-web-framework-selection-gin-echo-fiber",
+    "title": "Go Web 框架生产环境性能对比：Gin、Echo、Fiber 如何选型",
+    "url": "https://mp.weixin.qq.com/s/6u6_dbKrWAmDYRHUSP1Npg",
+    "author": "蒸馏大弟",
+    "source": "微信公众号",
+    "publishedAt": "2026-03-21",
+    "addedAt": "2026-04-20",
+    "category": "Web Development",
+    "tags": ["web-framework", "gin", "echo", "fiber", "net-http", "fasthttp", "selection"],
+    "rating": "B+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Gin、Echo、Fiber 三个主流 Go Web 框架，对比它们在纯 API、数据库场景、内存占用、GC 压力、生态成熟度与兼容性上的差异。",
+    "reason": "这篇文章适合作为 Go Web 框架选型的起点，因为它没有只盯着 benchmark，而是把框架性能、生态、中间件兼容性和团队落地成本放到同一个决策框架里，比较符合真实生产环境的选型方式。"
+  },
+  {
+    "id": "go-web-frameworks-supplement-iris-hertz-fasthttp-goframe",
+    "title": "Go Web 框架补充篇：Iris、Hertz、Fasthttp、Goframe",
+    "url": "https://mp.weixin.qq.com/s/z9BN3x28eMxWxFFEEfwfAg",
+    "author": "蒸馏大弟",
+    "source": "微信公众号",
+    "publishedAt": "2026-03-23",
+    "addedAt": "2026-04-20",
+    "category": "Web Development",
+    "tags": ["web-framework", "iris", "hertz", "fasthttp", "goframe", "selection", "middleware", "microservices"],
+    "rating": "B+",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "在 Gin、Echo、Fiber 之外，补充对 Iris、Hertz、Fasthttp、Goframe 的定位、性能、生态兼容性、学习曲线与适用场景分析。",
+    "reason": "这篇文章的价值在于把常见选型讨论从“三大主流框架”扩展到更完整的 Go Web 生态，尤其适合需要考虑微服务、企业级工具链或 fasthttp 性能路线的读者做横向比较。"
   }
 ]

@@ -5,6 +5,8 @@ summary: 聚焦最值得开发者关注的Golang新特性，帮助开发者快�
 readingOrder:
   - green-tea-gc
   - allocation-optimizations
+  - go-125-flight-recorder
+  - go-118-slice-growth-strategy
 ---
 
 Go 的新特性通常不是“炫技式更新”，而是围绕可维护性、可读性、标准库能力和工程体验做渐进增强。

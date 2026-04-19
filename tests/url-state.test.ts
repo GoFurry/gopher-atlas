@@ -22,7 +22,7 @@ describe('article URL state', () => {
       category: '',
       tags: ['profiling'],
       rating: [],
-      sort: 'recommended',
+      sort: 'published-date',
       lang: '',
       page: 1
     })

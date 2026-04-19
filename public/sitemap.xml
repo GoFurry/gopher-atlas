@@ -7,39 +7,67 @@
   <url><loc>https://gopheratlas.com/contribute</loc></url>
   <url><loc>https://gopheratlas.com/topics/go-new-features</loc></url>
   <url><loc>https://gopheratlas.com/topics/benchmarking-and-comparisons</loc></url>
+  <url><loc>https://gopheratlas.com/topics/web-development</loc></url>
   <url><loc>https://gopheratlas.com/tags/benchmark</loc></url>
   <url><loc>https://gopheratlas.com/tags/comparison</loc></url>
-  <url><loc>https://gopheratlas.com/tags/latency</loc></url>
-  <url><loc>https://gopheratlas.com/tags/throughput</loc></url>
+  <url><loc>https://gopheratlas.com/tags/fasthttp</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-25</loc></url>
-  <url><loc>https://gopheratlas.com/tags/go1-26</loc></url>
+  <url><loc>https://gopheratlas.com/tags/latency</loc></url>
   <url><loc>https://gopheratlas.com/tags/memory</loc></url>
-  <url><loc>https://gopheratlas.com/tags/postgresql</loc></url>
-  <url><loc>https://gopheratlas.com/tags/saturation</loc></url>
+  <url><loc>https://gopheratlas.com/tags/nginx</loc></url>
+  <url><loc>https://gopheratlas.com/tags/throughput</loc></url>
+  <url><loc>https://gopheratlas.com/tags/web-framework</loc></url>
+  <url><loc>https://gopheratlas.com/tags/web-performance</loc></url>
   <url><loc>https://gopheratlas.com/tags/allocation</loc></url>
+  <url><loc>https://gopheratlas.com/tags/fiber</loc></url>
+  <url><loc>https://gopheratlas.com/tags/go1-26</loc></url>
+  <url><loc>https://gopheratlas.com/tags/http2</loc></url>
+  <url><loc>https://gopheratlas.com/tags/net-http</loc></url>
+  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
+  <url><loc>https://gopheratlas.com/tags/postgresql</loc></url>
+  <url><loc>https://gopheratlas.com/tags/reverse-proxy</loc></url>
+  <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
+  <url><loc>https://gopheratlas.com/tags/saturation</loc></url>
+  <url><loc>https://gopheratlas.com/tags/selection</loc></url>
+  <url><loc>https://gopheratlas.com/tags/web-server</loc></url>
+  <url><loc>https://gopheratlas.com/tags/apache</loc></url>
   <url><loc>https://gopheratlas.com/tags/api</loc></url>
+  <url><loc>https://gopheratlas.com/tags/append</loc></url>
   <url><loc>https://gopheratlas.com/tags/cache</loc></url>
+  <url><loc>https://gopheratlas.com/tags/caddy</loc></url>
   <url><loc>https://gopheratlas.com/tags/compiler</loc></url>
   <url><loc>https://gopheratlas.com/tags/database</loc></url>
-  <url><loc>https://gopheratlas.com/tags/fasthttp</loc></url>
-  <url><loc>https://gopheratlas.com/tags/fiber</loc></url>
+  <url><loc>https://gopheratlas.com/tags/diagnostics</loc></url>
+  <url><loc>https://gopheratlas.com/tags/echo</loc></url>
+  <url><loc>https://gopheratlas.com/tags/flight-recorder</loc></url>
   <url><loc>https://gopheratlas.com/tags/gc</loc></url>
+  <url><loc>https://gopheratlas.com/tags/gin</loc></url>
   <url><loc>https://gopheratlas.com/tags/gnet</loc></url>
+  <url><loc>https://gopheratlas.com/tags/go1-18</loc></url>
+  <url><loc>https://gopheratlas.com/tags/goframe</loc></url>
   <url><loc>https://gopheratlas.com/tags/graphql</loc></url>
   <url><loc>https://gopheratlas.com/tags/grpc</loc></url>
   <url><loc>https://gopheratlas.com/tags/heap</loc></url>
+  <url><loc>https://gopheratlas.com/tags/hertz</loc></url>
+  <url><loc>https://gopheratlas.com/tags/http3</loc></url>
+  <url><loc>https://gopheratlas.com/tags/https</loc></url>
+  <url><loc>https://gopheratlas.com/tags/iris</loc></url>
   <url><loc>https://gopheratlas.com/tags/kafka</loc></url>
   <url><loc>https://gopheratlas.com/tags/kubernetes</loc></url>
+  <url><loc>https://gopheratlas.com/tags/language-basics</loc></url>
+  <url><loc>https://gopheratlas.com/tags/load-balancer</loc></url>
   <url><loc>https://gopheratlas.com/tags/memcached</loc></url>
   <url><loc>https://gopheratlas.com/tags/messaging</loc></url>
+  <url><loc>https://gopheratlas.com/tags/microservices</loc></url>
+  <url><loc>https://gopheratlas.com/tags/middleware</loc></url>
   <url><loc>https://gopheratlas.com/tags/mysql</loc></url>
-  <url><loc>https://gopheratlas.com/tags/net-http</loc></url>
-  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
+  <url><loc>https://gopheratlas.com/tags/observability</loc></url>
+  <url><loc>https://gopheratlas.com/tags/quic</loc></url>
   <url><loc>https://gopheratlas.com/tags/rabbitmq</loc></url>
   <url><loc>https://gopheratlas.com/tags/rabbitmq-streams</loc></url>
   <url><loc>https://gopheratlas.com/tags/redis</loc></url>
   <url><loc>https://gopheratlas.com/tags/rest</loc></url>
-  <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
+  <url><loc>https://gopheratlas.com/tags/runtime-trace</loc></url>
+  <url><loc>https://gopheratlas.com/tags/slice</loc></url>
   <url><loc>https://gopheratlas.com/tags/stack</loc></url>
-  <url><loc>https://gopheratlas.com/tags/web-framework</loc></url>
 </urlset>

@@ -11,6 +11,7 @@ describe('articles data and list helpers', () => {
     expect(articles.length).toBeGreaterThanOrEqual(3)
     expect(stats.categories).toContain('Go New Features')
     expect(stats.categories).toContain('Benchmarking & Comparisons')
+    expect(stats.categories).toContain('Web Development')
     expect(stats.tags).toContain('gc')
     expect(stats.tags).toContain('benchmark')
   })
@@ -18,15 +19,19 @@ describe('articles data and list helpers', () => {
   it('maps category names to topic slugs consistently', () => {
     expect(getCategorySlug('Go New Features')).toBe('go-new-features')
     expect(getCategorySlug('Benchmarking & Comparisons')).toBe('benchmarking-and-comparisons')
+    expect(getCategorySlug('Web Development')).toBe('web-development')
   })
 
   it('applies default recommended order with featured and must-read first', () => {
     const sorted = sortArticles(articles, 'recommended')
+    const topTier = articles
+      .filter((article) => article.featured && article.mustRead && article.rating === 'A+')
+      .sort((left, right) => Date.parse(right.addedAt) - Date.parse(left.addedAt))
 
     expect(sorted[0]?.featured).toBe(true)
     expect(sorted[0]?.mustRead).toBe(true)
-    expect(sorted[0]?.id).toBe('green-tea-gc')
     expect(sorted[0]?.rating).toBe('A+')
+    expect(sorted[0]?.id).toBe(topTier[0]?.id)
   })
 
   it('filters by keyword, category, tags, rating, and language together', () => {

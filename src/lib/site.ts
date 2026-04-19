@@ -6,17 +6,20 @@ export const PAGE_SIZE = 12
 
 export const CATEGORY_ORDER = [
   'Go New Features',
-  'Benchmarking & Comparisons'
+  'Benchmarking & Comparisons',
+  'Web Development'
 ] as const
 
 export const TOPIC_CATEGORY_SLUGS = [
   'go-new-features',
-  'benchmarking-and-comparisons'
+  'benchmarking-and-comparisons',
+  'web-development'
 ] as const
 
 export const CATEGORY_SLUG_MAP = {
   'Go New Features': 'go-new-features',
-  'Benchmarking & Comparisons': 'benchmarking-and-comparisons'
+  'Benchmarking & Comparisons': 'benchmarking-and-comparisons',
+  'Web Development': 'web-development'
 } as const
 
 export const RATING_ORDER = ['S+', 'S', 'A+', 'A', 'B+', 'B', 'C+', 'C'] as const
