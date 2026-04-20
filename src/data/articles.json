@@ -338,5 +338,59 @@
     "difficulty": "beginner",
     "summary": "在 Gin、Echo、Fiber 之外，补充对 Iris、Hertz、Fasthttp、Goframe 的定位、性能、生态兼容性、学习曲线与适用场景分析。",
     "reason": "这篇文章的价值在于把常见选型讨论从“三大主流框架”扩展到更完整的 Go Web 生态，尤其适合需要考虑微服务、企业级工具链或 fasthttp 性能路线的读者做横向比较。"
+  },
+  {
+    "id": "go-vs-java-performance-benchmark",
+    "title": "性能比拼：Go vs Java",
+    "url": "https://mp.weixin.qq.com/s/bHzrIb-Twx7SPsUVS-_DUg",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-24",
+    "addedAt": "2026-04-20",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "go", "java", "fiber", "spring-boot", "kubernetes", "performance"],
+    "rating": "B",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Go 与 Java 在 Kubernetes 环境下的两组实测，对比它们在简单接口场景和接入 S3、MongoDB 后的 CPU、内存、延迟与节流表现差异。",
+    "reason": "这篇文章适合作为语言级性能讨论的补充材料，因为它没有停留在脱离业务的微基准，而是放在更接近生产环境的容器化与外部依赖场景中观察差异。不过由于框架、库和基础设施因素混入较多，它更适合帮助理解实际部署表现，而不是得出语言本身的绝对结论。",
+    "originalUrl": "https://www.youtube.com/watch?v=8CiErLxdaA8",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=8CiErLxdaA8"
+      }
+    ]
+  },
+  {
+    "id": "rust-vs-zig-vs-go-performance-benchmark",
+    "title": "性能比拼：Rust vs Zig vs Go",
+    "url": "https://mp.weixin.qq.com/s/YLvvFPNNsRkoJa_8mJDiuQ",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-18",
+    "addedAt": "2026-04-20",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "rust", "zig", "go", "kubernetes", "latency", "throughput", "availability"],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Rust、Zig 和 Go 在 Kubernetes 环境下的实测，对比它们在延迟、吞吐、CPU、内存、可用性与 CPU 限流方面的差异。",
+    "reason": "这篇文章适合作为语言级性能对比专题里的重点补充，因为它不仅给出吞吐和延迟结果，还把容器限额、OOM、可用性下降等更贴近生产环境的现象一起呈现出来，能帮助读者更实际地理解不同语言在高负载下的表现边界。",
+    "originalUrl": "https://www.youtube.com/watch?v=SR2LRhnL1AQ",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=SR2LRhnL1AQ"
+      },
+      {
+        "label": "Pull Request",
+        "url": "https://github.com/antonputra/tutorials/pull/280"
+      },
+      {
+        "label": "源代码仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/215"
+      }
+    ]
   }
 ]
