@@ -137,6 +137,89 @@ description: 了解如何推荐文章、补全文章元数据，并通过 Issue 
 - `publishedAt` 和 `addedAt` 分别代表“原文发布时间”和“本站收录时间”，不要混用
 - 如果一篇文章讲的是一个明确问题，`reason` 可以直接写这篇文章解决了什么问题、适合什么场景
 
+## 新增学习随笔（Notes）
+
+学习随笔统一存放在 [src/content/notes](/D:/WorkSpace/Git/gopher-atlas/src/content/notes) 目录下，按“分组文件夹 / Markdown 文章”的结构维护。
+
+### 如何新增一个分组
+
+1. 在 [src/content/notes](/D:/WorkSpace/Git/gopher-atlas/src/content/notes) 下新建一个英文文件夹，例如 `performance-diary`
+2. 这个文件夹名会成为分组的稳定标识，并参与最终 URL
+3. 在该文件夹里新增一篇或多篇 Markdown，站点会自动把它们聚合成一个分组
+
+### 每篇随笔需要的字段
+
+每篇随笔都需要在 frontmatter 里补齐以下字段：
+
+- `title`
+  - 文章标题
+- `description`
+  - 一句话简介
+  - 会显示在学习随笔页分组卡片和文章页顶部
+- `author`
+  - 作者名
+- `createdAt`
+  - 创建时间
+  - 格式建议使用 `YYYY-MM-DD`
+- `updatedAt`
+  - 更新时间
+  - 格式建议使用 `YYYY-MM-DD`
+- `group`
+  - 分组名称
+  - 同一分组下的文章要保持完全一致，例如都写成 `性能随记`
+- `groupDescription`
+  - 分组说明
+  - 会显示在学习随笔页的分组卡片中
+  - 同一分组下的文章要保持完全一致
+- `groupOrder`
+  - 分组排序
+  - 数字越小越靠前
+  - 同一分组下的文章要保持完全一致
+- `order`
+  - 当前文章在该分组中的顺序
+  - 数字越小越靠前
+- `slug`（可选）
+  - 自定义文章 URL
+  - 不填时默认使用 Markdown 文件名
+
+### 推荐模板
+
+```md
+---
+title: 这篇文章的标题
+description: 这篇文章的简短说明。
+author: GoFurry
+createdAt: 2026-04-21
+updatedAt: 2026-04-21
+group: 性能随记
+groupDescription: 记录性能分析、内存排查与运行时观察中的真实问题和判断过程。
+groupOrder: 6
+order: 1
+slug: first-note
+---
+
+这里开始写正文。
+```
+
+### Notes 投稿约定
+
+- “新增一个分组”的本质是：新增一个文件夹，并在里面放入至少一篇带完整 frontmatter 的 Markdown
+- 同一分组下的所有文章，`group`、`groupDescription`、`groupOrder` 应保持一致
+- `order` 用来控制组内阅读顺序，建议从 `1` 开始连续编号
+- 如果只是给现有分组继续加文章，直接把新 Markdown 放进对应分组文件夹即可
+- 正文支持普通 Markdown、标题、列表、代码块与代码高亮
+- 如果代码块需要高亮，请在 fenced code block 里写明语言，例如 ` ```go `、` ```bash `
+
+### 提交前检查
+
+新增或修改学习随笔后，建议至少执行：
+
+```bash
+npm run generate
+npm run build
+npm test
+```
+
 ## 推荐标准
 
 - 优先推荐能讲清一个核心概念的文章
