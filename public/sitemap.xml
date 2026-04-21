@@ -79,20 +79,5 @@
   <url><loc>https://gopheratlas.com/tags/spring-boot</loc></url>
   <url><loc>https://gopheratlas.com/tags/stack</loc></url>
   <url><loc>https://gopheratlas.com/tags/zig</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/gc-pacing-notes</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/scheduler-observation</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/sync-pool-habits</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/escape-analysis-checklist</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/pprof-reading-path</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/memory-profile-cases</loc></url>
-  <url><loc>https://gopheratlas.com/notes/runtime-journal/goroutine-leak-audit</loc></url>
-  <url><loc>https://gopheratlas.com/notes/web-practice/handler-shaping</loc></url>
-  <url><loc>https://gopheratlas.com/notes/web-practice/middleware-boundary</loc></url>
-  <url><loc>https://gopheratlas.com/notes/web-practice/json-contracts</loc></url>
-  <url><loc>https://gopheratlas.com/notes/testing-habits/table-driven-tests-revisited</loc></url>
-  <url><loc>https://gopheratlas.com/notes/testing-habits/golden-file-tradeoffs</loc></url>
-  <url><loc>https://gopheratlas.com/notes/toolchain-notes/go-workspace-boundary</loc></url>
-  <url><loc>https://gopheratlas.com/notes/toolchain-notes/module-upgrade-routine</loc></url>
-  <url><loc>https://gopheratlas.com/notes/architecture-collab/package-surface-discipline</loc></url>
-  <url><loc>https://gopheratlas.com/notes/architecture-collab/refactor-with-teammates</loc></url>
+  <url><loc>https://gopheratlas.com/notes/cybersecurity/crs</loc></url>
 </urlset>
