@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "^5.2.0",
     "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^25.6.0",
     "gray-matter": "^4.0.3",
@@ -22,5 +23,8 @@
     "vite": "^8.0.8",
     "vitest": "^4.1.4",
     "zod": "^4.3.6"
+  },
+  "dependencies": {
+    "@sentry/browser": "^10.49.0"
   }
 }

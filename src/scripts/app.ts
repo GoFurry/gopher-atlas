@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser'
 import {
   DEFAULT_SEARCH_STATE,
   filterArticles,
@@ -15,6 +16,20 @@ import { applyTheme, readStoredTheme, resolveTheme, storeTheme, toggleTheme, typ
 type ArticlesPageData = {
   articles: ArticleItem[]
   pageSize: number
+}
+
+function initSentry() {
+  const dsn = import.meta.env.VITE_SENTRY_DSN
+  if (!dsn) {
+    return
+  }
+
+  Sentry.init({
+    dsn,
+    environment: import.meta.env.MODE,
+    integrations: [Sentry.browserTracingIntegration()],
+    tracesSampleRate: 0.1
+  })
 }
 
 const toastEl = document.querySelector<HTMLElement>('[data-toast]')
@@ -527,6 +542,7 @@ function initArticlesExplorer() {
   render()
 }
 
+initSentry()
 initThemeToggle()
 initMobileMenu()
 initClipboardActions()
