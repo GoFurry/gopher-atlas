@@ -392,5 +392,43 @@
         "url": "https://github.com/antonputra/tutorials/tree/main/lessons/215"
       }
     ]
+  },
+  {
+    "id": "nodejs-vs-go-performance-benchmark",
+    "title": "性能比拼: Node.js vs Go",
+    "url": "https://mp.weixin.qq.com/s/8NFWRx3Tt9NSkbz1_jXD4A",
+    "originalUrl": "https://www.youtube.com/watch?v=ZslbMp_T90k",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=ZslbMp_T90k"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/210"
+      }
+    ],
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-16",
+    "addedAt": "2026-04-21",
+    "category": "Benchmarking & Comparisons",
+    "tags": [
+      "benchmark",
+      "comparison",
+      "nodejs",
+      "go",
+      "express",
+      "net-http",
+      "kubernetes",
+      "postgresql",
+      "latency",
+      "throughput"
+    ],
+    "rating": "A",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Node.js（Express）与 Go（net/http）的两组实测，对比它们在纯 HTTP 场景和接入 PostgreSQL 后的延迟、吞吐、CPU、内存、可用性与连接池表现差异。",
+    "reason": "这篇文章很适合作为后端性能对比的入门材料，因为它没有停留在“哪门语言更快”的结论上，而是把 Kubernetes 部署、资源消耗、数据库接入后的行为变化和系统饱和点放进同一套测试框架里观察，便于读者建立更贴近生产环境的性能判断。"
   }
 ]
