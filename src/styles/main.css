@@ -317,6 +317,37 @@
     animation: hero-float 18s ease-in-out infinite;
   }
 
+  .note-toolbar summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .note-toolbar {
+    width: 2.5rem;
+    overflow: visible;
+  }
+
+  .note-toolbar:not([open]) {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .note-toolbar summary {
+    user-select: none;
+  }
+
+  .note-toolbar[open] .note-toolbar__icon {
+    transform: rotate(180deg);
+  }
+
+  .note-toolbar:not([open]) {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
   .markdown-body {
     color: var(--text-soft);
     line-height: 1.95;
@@ -385,17 +416,145 @@
     color: var(--text);
   }
 
+  .markdown-code-block {
+    margin-block: 1.5rem;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 58%, var(--panel));
+  }
+
+  .markdown-code-block__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+    padding: 0.65rem 0.9rem;
+  }
+
+  .markdown-code-block__language {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .markdown-code-block__copy {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.55rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 0 0.75rem;
+    color: var(--text-soft);
+    transition: color 500ms ease, border-color 500ms ease, background-color 500ms ease, transform 500ms ease;
+  }
+
+  .markdown-code-block__copy:hover {
+    transform: translateY(-1px);
+    border-color: var(--line-strong);
+    background: var(--surface-strong);
+    color: var(--text);
+  }
+
   .markdown-body pre {
     overflow-x: auto;
-    border-radius: 0.95rem;
-    border: 1px solid var(--line);
-    background: color-mix(in srgb, var(--panel) 88%, transparent);
-    padding: 1rem 1.1rem;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    padding: 1.15rem 1.2rem;
   }
 
   .markdown-body pre code {
+    display: block;
     background: transparent;
     padding: 0;
+    color: #dde7f1;
+  }
+
+  .markdown-body pre code.hljs {
+    color: #dde7f1;
+  }
+
+  .markdown-body .hljs-keyword,
+  .markdown-body .hljs-selector-tag,
+  .markdown-body .hljs-title.function_ {
+    color: #8dc6ff;
+  }
+
+  .markdown-body .hljs-string,
+  .markdown-body .hljs-title.class_,
+  .markdown-body .hljs-symbol,
+  .markdown-body .hljs-bullet {
+    color: #f3be7c;
+  }
+
+  .markdown-body .hljs-number,
+  .markdown-body .hljs-literal,
+  .markdown-body .hljs-attribute {
+    color: #a8d39b;
+  }
+
+  .markdown-body .hljs-comment,
+  .markdown-body .hljs-quote {
+    color: #7f8b96;
+  }
+
+  .markdown-body .hljs-params,
+  .markdown-body .hljs-variable,
+  .markdown-body .hljs-template-variable {
+    color: #e9edf1;
+  }
+
+  [data-theme='light'] .markdown-body pre {
+    background: color-mix(in srgb, #f7f1e8 92%, transparent);
+    border-color: color-mix(in srgb, var(--line-strong) 90%, transparent);
+  }
+
+  [data-theme='light'] .markdown-code-block {
+    background: color-mix(in srgb, #f7f1e8 92%, transparent);
+    border-color: color-mix(in srgb, var(--line-strong) 90%, transparent);
+  }
+
+  .markdown-code-block pre,
+  [data-theme='light'] .markdown-code-block pre {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  [data-theme='light'] .markdown-body pre code,
+  [data-theme='light'] .markdown-body pre code.hljs {
+    color: #24313b;
+  }
+
+  [data-theme='light'] .markdown-body .hljs-keyword,
+  [data-theme='light'] .markdown-body .hljs-selector-tag,
+  [data-theme='light'] .markdown-body .hljs-title.function_ {
+    color: #285f8f;
+  }
+
+  [data-theme='light'] .markdown-body .hljs-string,
+  [data-theme='light'] .markdown-body .hljs-title.class_,
+  [data-theme='light'] .markdown-body .hljs-symbol,
+  [data-theme='light'] .markdown-body .hljs-bullet {
+    color: #9b5b14;
+  }
+
+  [data-theme='light'] .markdown-body .hljs-number,
+  [data-theme='light'] .markdown-body .hljs-literal,
+  [data-theme='light'] .markdown-body .hljs-attribute {
+    color: #3d7a39;
+  }
+
+  [data-theme='light'] .markdown-body .hljs-comment,
+  [data-theme='light'] .markdown-body .hljs-quote {
+    color: #7d7d86;
   }
 }
 

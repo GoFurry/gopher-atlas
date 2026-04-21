@@ -25,6 +25,8 @@
     "zod": "^4.3.6"
   },
   "dependencies": {
-    "@sentry/browser": "^10.49.0"
+    "@sentry/browser": "^10.49.0",
+    "highlight.js": "^11.11.1",
+    "marked-highlight": "^2.2.4"
   }
 }

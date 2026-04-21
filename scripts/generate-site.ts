@@ -12,7 +12,14 @@ import {
   sortArticles,
   type ArticleItem
 } from '../src/lib/articles'
-import { loadArticles, loadStaticPageDocument, loadTopicDocuments, type TopicDocument } from '../src/lib/content'
+import {
+  loadArticles,
+  loadNoteDocuments,
+  loadStaticPageDocument,
+  loadTopicDocuments,
+  type NoteDocument,
+  type TopicDocument
+} from '../src/lib/content'
 import {
   BUTTON_RECT_GHOST_CLASS,
   BUTTON_RECT_PRIMARY_CLASS,
@@ -44,7 +51,7 @@ import {
 } from '../src/lib/site'
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))
-const generatedTargets = ['index.html', 'articles', 'topics', 'tags', 'about', 'contribute'] as const
+const generatedTargets = ['index.html', 'articles', 'topics', 'tags', 'notes', 'about', 'contribute'] as const
 
 type Meta = {
   title: string
@@ -54,6 +61,14 @@ type Meta = {
 
 type TopicViewModel = TopicDocument & {
   articles: ArticleItem[]
+}
+
+type NoteGroupViewModel = {
+  title: string
+  slug: string
+  description: string
+  order: number
+  notes: NoteDocument[]
 }
 
 const CURRENT_YEAR = new Date().getFullYear()
@@ -78,6 +93,8 @@ const FILTER_INPUT_CLASS = 'h-12 w-full rounded-lg border border-[color:var(--li
 const FILTER_SELECT_TRIGGER_CLASS = `${FILTER_INPUT_CLASS} inline-flex items-center justify-between gap-4 pr-3 text-left`
 const FILTER_SELECT_MENU_CLASS = 'pointer-events-none absolute top-[calc(100%+0.55rem)] left-0 right-0 z-20 max-h-72 overflow-y-auto rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] p-2 opacity-0 shadow-[var(--shadow-soft)] transition duration-500 translate-y-2 data-[open=true]:pointer-events-auto data-[open=true]:translate-y-0 data-[open=true]:opacity-100'
 const FILTER_CHIP_CLASS = 'inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--text-soft)] transition duration-500 group-hover:-translate-y-px group-hover:border-[color:var(--line-strong)] group-hover:bg-[color:var(--surface-strong)] peer-checked:border-[color:var(--accent)] peer-checked:bg-[color:color-mix(in_oklab,var(--accent)_18%,transparent)] peer-checked:text-[color:var(--text)] peer-checked:shadow-[0_0_0_1px_color-mix(in_oklab,var(--accent)_35%,transparent)]'
+const NOTE_GROUP_PAGE_SIZE = 4
+const CONTENT_PANEL_CLASS = PANEL_CLASS.replace('rounded-[22px]', 'rounded-lg')
 
 async function cleanGeneratedTargets() {
   await Promise.all(
@@ -92,6 +109,69 @@ async function cleanGeneratedTargets() {
 
 function serializePageData(data: unknown): string {
   return JSON.stringify(data).replaceAll('</script', '<\\/script')
+}
+
+function sortNotes(notes: NoteDocument[]): NoteDocument[] {
+  return [...notes].sort((left, right) => {
+    if (left.groupOrder !== right.groupOrder) {
+      return left.groupOrder - right.groupOrder
+    }
+
+    if (left.order !== right.order) {
+      return left.order - right.order
+    }
+
+    return left.createdAt.localeCompare(right.createdAt)
+  })
+}
+
+function buildNoteGroups(notes: NoteDocument[]): NoteGroupViewModel[] {
+  const groupMap = new Map<string, NoteGroupViewModel>()
+
+  for (const note of sortNotes(notes)) {
+    const existing = groupMap.get(note.groupSlug)
+    if (existing) {
+      existing.notes.push(note)
+      if (!existing.description && note.groupDescription) {
+        existing.description = note.groupDescription
+      }
+      continue
+    }
+
+    groupMap.set(note.groupSlug, {
+      title: note.group,
+      slug: note.groupSlug,
+      description: note.groupDescription,
+      order: note.groupOrder,
+      notes: [note]
+    })
+  }
+
+  return [...groupMap.values()]
+    .map((group) => ({
+      ...group,
+      notes: sortNotes(group.notes)
+    }))
+    .sort((left, right) => {
+      if (left.order !== right.order) {
+        return left.order - right.order
+      }
+
+      return left.title.localeCompare(right.title)
+    })
+}
+
+function buildNoteHref(note: NoteDocument): string {
+  return `/notes/${note.groupSlug}/${note.slug}/`
+}
+
+function getSurroundingNotes(notes: NoteDocument[], currentIndex: number): NoteDocument[] {
+  if (notes.length <= 3) {
+    return notes
+  }
+
+  const start = Math.max(0, Math.min(currentIndex - 1, notes.length - 3))
+  return notes.slice(start, start + 3)
 }
 
 function renderShell(meta: Meta, content: string, pathname: string, pageData?: unknown): string {
@@ -177,7 +257,8 @@ function renderHeader(pathname: string): string {
   const links = [
     { href: '/', label: '\u9996\u9875' },
     { href: '/articles/', label: '\u5168\u90e8\u6587\u7ae0', mobileLabel: '\u6587\u7ae0' },
-    { href: '/topics/', label: '\u8bdd\u9898\u4e13\u533a', mobileLabel: '\u8bdd\u9898' }
+    { href: '/topics/', label: '\u8bdd\u9898\u4e13\u533a', mobileLabel: '\u8bdd\u9898' },
+    { href: '/notes/', label: '\u5b66\u4e60\u968f\u7b14', mobileLabel: '\u968f\u7b14' }
   ]
 
   const navLinks = links.map((link) => {
@@ -289,6 +370,160 @@ function renderTopicCards(topics: TopicViewModel[]): string {
       `).join('')}
     </div>
   `
+}
+
+function renderNoteGroupCards(groups: NoteGroupViewModel[]): string {
+  return `
+    <div class="grid gap-4 lg:grid-cols-3">
+      ${groups.map((group, index) => {
+        const totalPages = Math.max(1, Math.ceil(group.notes.length / NOTE_GROUP_PAGE_SIZE))
+
+        return `
+          <article class="${SUBTLE_PANEL_CLASS} flex h-full flex-col gap-5 px-6 py-6 opacity-0 [animation:hero-rise_820ms_cubic-bezier(0.22,1,0.36,1)_forwards] motion-reduce:opacity-100 motion-reduce:[animation:none]" style="animation-delay:${120 + (index * 90)}ms" data-note-group-card data-page-size="${NOTE_GROUP_PAGE_SIZE}">
+            <div class="space-y-3">
+              <div class="flex min-h-10 items-center justify-between gap-3">
+                <div class="flex min-w-0 items-center gap-3">
+                  <h3 class="min-w-0 max-w-[11rem] truncate text-[1rem] font-medium tracking-[0.01em] text-[color:var(--text)]">${escapeHtml(group.title)}</h3>
+                  <span class="shrink-0 text-sm tracking-[0.08em] text-[color:var(--text-muted)]">${group.notes.length} 篇</span>
+                </div>
+                ${totalPages > 1 ? `
+                  <div class="flex shrink-0 items-center gap-2" data-note-group-controls>
+                    <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-40" type="button" data-note-group-prev>上一页</button>
+                    <span class="min-w-12 text-center text-xs tracking-[0.08em] text-[color:var(--text-muted)]" data-note-group-page>1 / ${totalPages}</span>
+                    <button class="inline-flex min-h-10 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-3 text-sm text-[color:var(--text-soft)] transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)] disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-40" type="button" data-note-group-next>下一页</button>
+                  </div>
+                ` : ''}
+              </div>
+              <p class="min-h-14 line-clamp-2 text-sm leading-7 text-[color:var(--text-soft)]">${escapeHtml(group.description || `${group.title} 这一组收录了按顺序整理的原创随笔，适合连续阅读。`)}</p>
+            </div>
+            <div class="space-y-4 border-t border-[color:var(--line)] pt-5">
+              <div class="space-y-2.5">
+                ${group.notes.map((note, noteIndex) => `
+                  <a class="group flex items-start rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3 transition duration-500 hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)]" href="${buildNoteHref(note)}" data-note-group-item data-note-group-index="${noteIndex}" ${noteIndex >= NOTE_GROUP_PAGE_SIZE ? 'hidden' : ''}>
+                    <span class="min-w-0 space-y-1">
+                      <span class="block text-sm font-medium leading-6 text-[color:var(--text)] transition duration-500 group-hover:text-[color:var(--accent-strong)]">${escapeHtml(note.title)}</span>
+                      <span class="block text-xs leading-5 text-[color:var(--text-muted)]">${escapeHtml(`${formatDate(note.createdAt)} · ${note.author}`)}</span>
+                    </span>
+                  </a>
+                `).join('')}
+              </div>
+            </div>
+          </article>
+        `
+      }).join('')}
+    </div>
+  `
+}
+
+function renderNotesIndexPage(groups: NoteGroupViewModel[]): string {
+  const totalNotes = groups.reduce((sum, group) => sum + group.notes.length, 0)
+
+  return renderShell(
+    {
+      title: `学习随笔 | ${SITE_NAME}`,
+      description: '这里收录站内原创博客，按分组整理，适合按主题连续阅读。',
+      pageId: 'notes'
+    },
+    `
+      <div class="${PAGE_SHELL_CLASS} space-y-10 md:space-y-14">
+        ${renderPageHero(
+          'Notes',
+          '学习随笔',
+          '这里记录了一些使用Golang时遇到的问题和学习心得，希望能给你带来帮助。'
+        )}
+        <section class="space-y-6">
+          <div class="space-y-3">
+            <span class="${SECTION_EYEBROW_CLASS}">Directory</span>
+            <h2 class="font-display text-[clamp(1.9rem,3vw,3rem)] leading-[1.04] tracking-[-0.04em] text-[color:var(--text)]">${groups.length} 个分组 - ${totalNotes} 篇学习心得</h2>
+            <p class="max-w-3xl text-base leading-8 text-[color:var(--text-soft)]">你可以从自己最近关心的问题出发，挑一个分组慢慢往下读，也可以把它当成一份持续更新的个人学习地图。</p>
+          </div>
+          ${renderNoteGroupCards(groups)}
+        </section>
+      </div>
+    `,
+    '/notes/'
+  )
+}
+
+function renderNotePage(group: NoteGroupViewModel, note: NoteDocument): string {
+  const currentIndex = group.notes.findIndex((entry) => entry.slug === note.slug)
+  const prevNote = currentIndex > 0 ? group.notes[currentIndex - 1] : null
+  const nextNote = currentIndex >= 0 && currentIndex < group.notes.length - 1 ? group.notes[currentIndex + 1] : null
+  const nearbyNotes = getSurroundingNotes(group.notes, Math.max(currentIndex, 0))
+  const notePosition = currentIndex + 1
+
+  return renderShell(
+    {
+      title: `${note.title} | ${SITE_NAME}`,
+      description: note.description,
+      pageId: 'note'
+    },
+    `
+      <div class="${PAGE_SHELL_CLASS} space-y-10 md:space-y-14">
+        <section class="space-y-4 border-b border-[color:var(--line)] pb-7 md:pb-8">
+          <div class="space-y-4">
+            <h1 class="w-full font-display text-[clamp(2rem,4.2vw,3.45rem)] leading-[0.98] tracking-[-0.045em] text-[color:var(--text)]">${escapeHtml(note.title)}</h1>
+            <p class="w-full text-base leading-8 text-[color:var(--text-soft)]">${escapeHtml(note.description)}</p>
+          </div>
+          <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[color:var(--text-muted)]">
+            <span>${escapeHtml(note.author)}</span>
+            <span>${escapeHtml(`创建于 ${formatDate(note.createdAt)}`)}</span>
+            <span>${escapeHtml(`更新于 ${formatDate(note.updatedAt)}`)}</span>
+          </div>
+        </section>
+        <section class="relative">
+          <article class="${CONTENT_PANEL_CLASS} markdown-body px-6 py-6 md:px-8 md:py-8">
+            ${note.body}
+          </article>
+          <aside class="pointer-events-none fixed top-24 right-4 z-30 mt-0 lg:right-6 lg:w-[18rem]">
+            <div class="${PANEL_CLASS.replace('rounded-[22px]', 'rounded-lg')} pointer-events-auto flex items-center gap-2 px-2.5 py-2.5">
+              <span class="hidden min-w-0 flex-1 truncate text-[0.9rem] font-medium tracking-[0.01em] text-[color:var(--text)] lg:block">${escapeHtml(group.title)}</span>
+              <a class="${BUTTON_RECT_GHOST_CLASS} !h-10 !min-h-10 flex-1 px-3.5 text-sm lg:flex-none" href="/notes/">返回列表</a>
+              <details class="note-toolbar" data-note-toolbar>
+                <summary class="flex h-10 min-h-10 w-10 cursor-pointer list-none items-center justify-center p-0 text-left">
+                  <span class="sr-only">展开目录</span>
+                  <span class="note-toolbar__icon inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-muted)] transition duration-500">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3.25 5.75 8 10.5l4.75-4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </summary>
+                <div class="absolute top-[calc(100%+0.5rem)] right-0 w-[min(18rem,calc(100vw-2rem))] space-y-3 rounded-lg border border-[color:var(--line)] bg-[color:var(--panel)] px-4 py-4 shadow-[var(--shadow-soft)] backdrop-blur-xl">
+                  <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-sm">
+                    ${prevNote
+                      ? `<a class="truncate text-[color:var(--text-soft)] transition duration-500 hover:text-[color:var(--text)]" href="${buildNoteHref(prevNote)}">上一篇</a>`
+                      : `<span class="truncate text-[color:var(--text-muted)] opacity-60">上一篇</span>`}
+                    <span class="text-[0.82rem] tracking-[0.08em] text-[color:var(--text-muted)]">${notePosition}/${group.notes.length}</span>
+                    ${nextNote
+                      ? `<a class="truncate text-right text-[color:var(--text-soft)] transition duration-500 hover:text-[color:var(--text)]" href="${buildNoteHref(nextNote)}">下一篇</a>`
+                      : `<span class="truncate text-right text-[color:var(--text-muted)] opacity-60">下一篇</span>`}
+                  </div>
+                  <div class="space-y-2">
+                    ${nearbyNotes.map((entry) => {
+                      const isCurrent = entry.slug === note.slug
+                      const itemClass = isCurrent
+                        ? 'border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] text-[color:var(--text)]'
+                        : 'border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--text-soft)] hover:-translate-y-px hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface-strong)] hover:text-[color:var(--text)]'
+
+                      return `
+                        <a class="group flex items-start rounded-lg border px-3.5 py-2.5 transition duration-500 ${itemClass}" href="${buildNoteHref(entry)}" ${isCurrent ? 'aria-current="page"' : ''}>
+                          <span class="min-w-0 space-y-1">
+                            <span class="block truncate text-[0.9rem] font-medium leading-5 ${isCurrent ? 'text-[color:var(--accent-strong)]' : 'text-[color:var(--text)] transition duration-500 group-hover:text-[color:var(--accent-strong)]'}">${escapeHtml(entry.title)}</span>
+                            <span class="block text-[0.72rem] leading-5 text-[color:var(--text-muted)]">${escapeHtml(formatDate(entry.createdAt))}</span>
+                          </span>
+                        </a>
+                      `
+                    }).join('')}
+                  </div>
+                </div>
+              </details>
+            </div>
+          </aside>
+        </section>
+      </div>
+    `,
+    buildNoteHref(note)
+  )
 }
 
 function renderRatingLegend(): string {
@@ -649,7 +884,7 @@ function renderMarkdownPage(title: string, description: string, body: string, pa
       <div class="${PAGE_SHELL_CLASS} space-y-10 md:space-y-14">
         ${renderPageHero(pageId === 'about' ? 'About' : 'Contribute', escapeHtml(title), escapeHtml(description))}
         <section>
-          <article class="${PANEL_CLASS} markdown-body px-6 py-6 md:px-8 md:py-8">
+          <article class="${CONTENT_PANEL_CLASS} markdown-body px-6 py-6 md:px-8 md:py-8">
             ${body}
           </article>
         </section>
@@ -681,11 +916,13 @@ async function main() {
   await cleanGeneratedTargets()
 
   const articles = loadArticles()
+  const notes = await loadNoteDocuments(rootDir)
   const topicDocuments = await loadTopicDocuments(rootDir)
   const aboutPage = await loadStaticPageDocument(rootDir, 'about')
   const contributePage = await loadStaticPageDocument(rootDir, 'contribute')
   const tagGroups = groupTagsByCount(articles)
   const topicMap = new Map(topicDocuments.map((topic) => [topic.slug, topic]))
+  const noteGroups = buildNoteGroups(notes)
 
   const topicPages: TopicViewModel[] = TOPIC_CATEGORY_SLUGS.map((slug) => {
     const topic = topicMap.get(slug)
@@ -700,11 +937,12 @@ async function main() {
     }
   })
 
-  const allRoutes = ['/', '/articles/', '/topics/', '/about/', '/contribute/']
+  const allRoutes = ['/', '/articles/', '/topics/', '/notes/', '/about/', '/contribute/']
 
   await writePage('index.html', renderHomePage())
   await writePage('articles/index.html', renderArticlesPage(articles, topicPages))
   await writePage('topics/index.html', renderTopicsIndexPage(topicPages, articles))
+  await writePage('notes/index.html', renderNotesIndexPage(noteGroups))
   await writePage('about/index.html', renderMarkdownPage(aboutPage.title, aboutPage.description, aboutPage.body, '/about/', 'about'))
   await writePage('contribute/index.html', renderMarkdownPage(contributePage.title, contributePage.description, contributePage.body, '/contribute/', 'contribute'))
 
@@ -718,6 +956,14 @@ async function main() {
     const route = `/tags/${tag.slug}/`
     allRoutes.push(route)
     await writePage(`tags/${tag.slug}/index.html`, renderTagPage(tag.name, relatedArticles))
+  }
+
+  for (const group of noteGroups) {
+    for (const note of group.notes) {
+      const route = buildNoteHref(note)
+      allRoutes.push(route)
+      await writePage(`notes/${group.slug}/${note.slug}/index.html`, renderNotePage(group, note))
+    }
   }
 
   await writeSitemap(allRoutes)

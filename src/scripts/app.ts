@@ -135,12 +135,14 @@ function initMobileMenu() {
 
 function initClipboardActions() {
   document.addEventListener('click', async (event) => {
-    const target = event.target instanceof HTMLElement ? event.target.closest<HTMLElement>('[data-copy-text], [data-copy-current-link]') : null
+    const target = event.target instanceof HTMLElement ? event.target.closest<HTMLElement>('[data-copy-text], [data-copy-current-link], [data-copy-code-target]') : null
     if (!target) {
       return
     }
 
-    const text = target.dataset.copyText ?? window.location.href
+    const targetId = target.dataset.copyCodeTarget
+    const codeSource = targetId ? document.getElementById(targetId) as HTMLTextAreaElement | null : null
+    const text = codeSource?.value ?? target.dataset.copyText ?? window.location.href
     const success = await copyText(text)
     showToast(success ? '链接已复制' : '复制失败，请手动复制')
   })
@@ -169,19 +171,31 @@ function initBackToTop() {
   })
 }
 
-function initTopicReadingOrder() {
-  const root = document.querySelector<HTMLElement>('[data-reading-order]')
-  if (!root) {
-    return
+function initPagedList(
+  root: HTMLElement,
+  {
+    itemSelector,
+    prevSelector,
+    nextSelector,
+    pageSelector
+  }: {
+    itemSelector: string
+    prevSelector: string
+    nextSelector: string
+    pageSelector: string
   }
-
-  const items = [...root.querySelectorAll<HTMLElement>('[data-reading-order-item]')]
-  const prevButton = root.querySelector<HTMLButtonElement>('[data-reading-order-prev]')
-  const nextButton = root.querySelector<HTMLButtonElement>('[data-reading-order-next]')
-  const pageLabel = root.querySelector<HTMLElement>('[data-reading-order-page]')
-  const pageSize = Number.parseInt(root.dataset.pageSize ?? '3', 10)
+) {
+  const items = [...root.querySelectorAll<HTMLElement>(itemSelector)]
+  const prevButton = root.querySelector<HTMLButtonElement>(prevSelector)
+  const nextButton = root.querySelector<HTMLButtonElement>(nextSelector)
+  const pageLabel = root.querySelector<HTMLElement>(pageSelector)
+  const pageSize = Number.parseInt(root.dataset.pageSize ?? '4', 10)
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize))
   let currentPage = 1
+
+  if (items.length === 0) {
+    return
+  }
 
   const renderPage = () => {
     const start = (currentPage - 1) * pageSize
@@ -213,6 +227,36 @@ function initTopicReadingOrder() {
   })
 
   renderPage()
+}
+
+function initTopicReadingOrder() {
+  const root = document.querySelector<HTMLElement>('[data-reading-order]')
+  if (!root) {
+    return
+  }
+
+  initPagedList(root, {
+    itemSelector: '[data-reading-order-item]',
+    prevSelector: '[data-reading-order-prev]',
+    nextSelector: '[data-reading-order-next]',
+    pageSelector: '[data-reading-order-page]'
+  })
+}
+
+function initNoteGroupCards() {
+  const roots = [...document.querySelectorAll<HTMLElement>('[data-note-group-card]')]
+  if (roots.length === 0) {
+    return
+  }
+
+  roots.forEach((root) => {
+    initPagedList(root, {
+      itemSelector: '[data-note-group-item]',
+      prevSelector: '[data-note-group-prev]',
+      nextSelector: '[data-note-group-next]',
+      pageSelector: '[data-note-group-page]'
+    })
+  })
 }
 
 function readArticlesPageData(): ArticlesPageData | null {
@@ -548,4 +592,5 @@ initMobileMenu()
 initClipboardActions()
 initBackToTop()
 initTopicReadingOrder()
+initNoteGroupCards()
 initArticlesExplorer()
