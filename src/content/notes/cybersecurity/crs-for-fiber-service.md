@@ -11,7 +11,7 @@ order: 1
 slug: crs-for-fiber-service
 ---
 
-> 全文长度：5500左右
+> 全文长度：5500+  
 > 预计阅读时间：5~15 分钟  
 > 阅读难度：入门  
 > 关键词：CRS，Coraza，Fiber，Security，WAF
