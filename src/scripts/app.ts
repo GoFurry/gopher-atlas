@@ -144,7 +144,8 @@ function initClipboardActions() {
     const codeSource = targetId ? document.getElementById(targetId) as HTMLTextAreaElement | null : null
     const text = codeSource?.value ?? target.dataset.copyText ?? window.location.href
     const success = await copyText(text)
-    showToast(success ? '链接已复制' : '复制失败，请手动复制')
+    const successMessage = targetId ? '代码已复制' : '链接已复制'
+    showToast(success ? successMessage : '复制失败，请手动复制')
   })
 }
 

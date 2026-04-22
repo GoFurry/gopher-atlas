@@ -12,7 +12,7 @@ describe('notes content loader', () => {
     expect(notes.every((note) => note.title && note.description && note.author)).toBe(true)
     expect(onlyNote.groupSlug).toBe('cybersecurity')
     expect(onlyNote.group).toBe('网络安全')
-    expect(onlyNote.slug).toBe('crs')
+    expect(onlyNote.slug).toBe('crs-for-fiber-service')
     expect(onlyNote.order).toBe(1)
   })
 })
