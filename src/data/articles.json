@@ -272,7 +272,7 @@
     "addedAt": "2026-04-20",
     "category": "Benchmarking & Comparisons",
     "tags": ["benchmark", "comparison", "nginx", "caddy", "web-server", "reverse-proxy", "load-balancer", "web-performance"],
-    "rating": "A+",
+    "rating": "A",
     "language": "zh",
     "difficulty": "beginner",
     "summary": "围绕 Nginx 与 Caddy 在静态站点和反向代理两种场景下的实测，对比它们在延迟、吞吐、CPU、内存、可用性与网络流量上的差异。",
@@ -288,7 +288,7 @@
     "addedAt": "2026-04-20",
     "category": "Benchmarking & Comparisons",
     "tags": ["benchmark", "comparison", "nginx", "apache", "web-server", "reverse-proxy", "http2", "https", "web-performance"],
-    "rating": "A+",
+    "rating": "A",
     "language": "zh",
     "difficulty": "beginner",
     "summary": "围绕 Nginx 与 Apache 在静态网站、HTTPS 与反向代理三种场景下的实测，对比它们在延迟、吞吐、CPU、内存、可用性与网络流量上的差异。",
@@ -425,10 +425,122 @@
       "latency",
       "throughput"
     ],
-    "rating": "A",
+    "rating": "B+",
     "language": "zh",
     "difficulty": "beginner",
     "summary": "围绕 Node.js（Express）与 Go（net/http）的两组实测，对比它们在纯 HTTP 场景和接入 PostgreSQL 后的延迟、吞吐、CPU、内存、可用性与连接池表现差异。",
     "reason": "这篇文章很适合作为后端性能对比的入门材料，因为它没有停留在“哪门语言更快”的结论上，而是把 Kubernetes 部署、资源消耗、数据库接入后的行为变化和系统饱和点放进同一套测试框架里观察，便于读者建立更贴近生产环境的性能判断。"
+  },
+  {
+    "id": "go-gin-vs-python-flask-performance-benchmark",
+    "title": "性能比拼：Go(Gin) vs Python(Flask)",
+    "url": "https://mp.weixin.qq.com/s/EdO_9OGrmwPigCYDabxeYg",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-04-01",
+    "addedAt": "2026-04-23",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "go", "python", "gin", "flask", "kubernetes", "opentelemetry", "prometheus", "s3", "postgresql"],
+    "rating": "B",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 Go(Gin) 与 Python(Flask) 在 Kubernetes 环境下的两组实测，对比它们在纯 REST 场景和接入 S3、Postgres 后的 CPU、内存、延迟与吞吐表现。",
+    "reason": "这篇文章适合作为语言与框架组合对比的补充材料，因为它把 OpenTelemetry、Prometheus、S3 和 Postgres 一起放进测试里，展示了更接近生产环境的服务端差异。不过由于语言、框架和外部依赖因素同时存在，它更适合帮助理解部署效果，而不是下语言本身的绝对结论。",
+    "originalUrl": "https://www.youtube.com/watch?v=vJsqDqq1R0Y",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=vJsqDqq1R0Y"
+      }
+    ]
+  },
+  {
+    "id": "dotnet-vs-fiber-go-performance",
+    "title": "性能比拼：.NET (C#) vs. Fiber (Go)",
+    "url": "https://mp.weixin.qq.com/s/EwOVP4UMLLghE9tO7gVr_Q",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-08-24",
+    "addedAt": "2026-04-23",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "dotnet", "csharp", "go", "fiber", "kubernetes", "postgresql", "s3", "startup-time"],
+    "rating": "B",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 .NET 8 Minimal API 与 Go Fiber 在 Kubernetes 环境下的两组实测，对比它们在 CPU、内存、延迟、吞吐、启动时间、S3 上传与数据库写入场景下的差异。",
+    "reason": "这篇文章的价值在于把框架性能、镜像体积、启动速度和默认连接池行为放到同一套容器化测试里观察，适合作为云原生应用栈对比的参考材料。不过它混合了语言、框架和默认库行为，更适合看实际部署结果，而不是做纯粹的语言性能判断。",
+    "originalUrl": "https://www.youtube.com/watch?v=56TUfwejKfo",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=56TUfwejKfo"
+      },
+      {
+        "label": ".NET 8",
+        "url": "https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet"
+      },
+      {
+        "label": "Fiber Benchmarks",
+        "url": "https://docs.gofiber.io/extra/benchmarks/"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/"
+      }
+    ]
+  },
+  {
+    "id": "tcp-vs-udp-performance-round-3",
+    "title": "性能比拼：TCP vs UDP(第三轮)",
+    "url": "https://mp.weixin.qq.com/s/pBNWIcPT_hSl8bpT4udf2g",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-03-31",
+    "addedAt": "2026-04-23",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "tcp", "udp", "network", "throughput", "latency", "mtu"],
+    "rating": "B",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕 TCP 与 UDP 的第三轮实测，分析在缓冲、系统调用优化、MTU 选择和带宽限制影响下，两者在吞吐与延迟上的差异。",
+    "reason": "这篇文章适合作为网络协议性能讨论的补充材料，因为它不只停留在“UDP 更快”这种印象层面，而是把 payload、系统调用次数、MTU 和实例带宽限制这些真正影响结果的因素一起讲清楚了。",
+    "originalUrl": "https://www.youtube.com/watch?v=FlHQJ_MMdOQ",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=FlHQJ_MMdOQ"
+      }
+    ]
+  },
+  {
+    "id": "vm-vs-kubernetes-performance",
+    "title": "Kubernetes 比同规格虚拟机性能相差多少？",
+    "url": "https://mp.weixin.qq.com/s/DXzhcxzSxUaT5Y-QkuXn0w",
+    "author": "旅途散记",
+    "source": "微信公众号",
+    "publishedAt": "2025-03-29",
+    "addedAt": "2026-04-23",
+    "category": "Benchmarking & Comparisons",
+    "tags": ["benchmark", "comparison", "kubernetes", "vm", "deployment", "clusterip", "performance", "cpu-throttling"],
+    "rating": "B",
+    "language": "zh",
+    "difficulty": "beginner",
+    "summary": "围绕同规格虚拟机与 Kubernetes 中部署同一应用的实测，对比它们在延迟、吞吐、CPU 使用与 CPU 限流上的差异。",
+    "reason": "这篇文章适合作为基础设施层性能对比的补充材料，因为它把 Kubernetes 的网络抽象、ClusterIP、kube-proxy 和 cgroups 限流带来的额外成本直接放到测试里展示，能帮助读者更现实地评估“便利性”和“性能开销”之间的关系。",
+    "originalUrl": "https://www.youtube.com/watch?v=Y4pOmi0j_90",
+    "links": [
+      {
+        "label": "原视频",
+        "url": "https://www.youtube.com/watch?v=Y4pOmi0j_90"
+      },
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/antonputra/tutorials/tree/main/lessons/237"
+      },
+      {
+        "label": "cAdvisor",
+        "url": "https://github.com/google/cadvisor"
+      }
+    ]
   }
 ]
