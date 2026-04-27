@@ -7,18 +7,24 @@ export const PAGE_SIZE = 12
 export const CATEGORY_ORDER = [
   'Go New Features',
   'Benchmarking & Comparisons',
+  'Performance Optimization',
+  'Daily Library',
   'Web Development'
 ] as const
 
 export const TOPIC_CATEGORY_SLUGS = [
   'go-new-features',
   'benchmarking-and-comparisons',
+  'performance-optimization',
+  'daily-library',
   'web-development'
 ] as const
 
 export const CATEGORY_SLUG_MAP = {
   'Go New Features': 'go-new-features',
   'Benchmarking & Comparisons': 'benchmarking-and-comparisons',
+  'Performance Optimization': 'performance-optimization',
+  'Daily Library': 'daily-library',
   'Web Development': 'web-development'
 } as const
 

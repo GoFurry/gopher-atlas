@@ -8,92 +8,128 @@
   <url><loc>https://gopheratlas.com/contribute</loc></url>
   <url><loc>https://gopheratlas.com/topics/go-new-features</loc></url>
   <url><loc>https://gopheratlas.com/topics/benchmarking-and-comparisons</loc></url>
+  <url><loc>https://gopheratlas.com/topics/performance-optimization</loc></url>
+  <url><loc>https://gopheratlas.com/topics/daily-library</loc></url>
   <url><loc>https://gopheratlas.com/topics/web-development</loc></url>
+  <url><loc>https://gopheratlas.com/topics/golang-interview-questions</loc></url>
+  <url><loc>https://gopheratlas.com/topics/on-the-craft-of-programming</loc></url>
   <url><loc>https://gopheratlas.com/tags/benchmark</loc></url>
   <url><loc>https://gopheratlas.com/tags/comparison</loc></url>
   <url><loc>https://gopheratlas.com/tags/kubernetes</loc></url>
+  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
   <url><loc>https://gopheratlas.com/tags/latency</loc></url>
   <url><loc>https://gopheratlas.com/tags/throughput</loc></url>
   <url><loc>https://gopheratlas.com/tags/go</loc></url>
+  <url><loc>https://gopheratlas.com/tags/memory</loc></url>
   <url><loc>https://gopheratlas.com/tags/postgresql</loc></url>
   <url><loc>https://gopheratlas.com/tags/fiber</loc></url>
-  <url><loc>https://gopheratlas.com/tags/performance</loc></url>
+  <url><loc>https://gopheratlas.com/tags/allocation</loc></url>
   <url><loc>https://gopheratlas.com/tags/fasthttp</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-25</loc></url>
-  <url><loc>https://gopheratlas.com/tags/memory</loc></url>
   <url><loc>https://gopheratlas.com/tags/net-http</loc></url>
   <url><loc>https://gopheratlas.com/tags/nginx</loc></url>
+  <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
+  <url><loc>https://gopheratlas.com/tags/selection</loc></url>
   <url><loc>https://gopheratlas.com/tags/web-framework</loc></url>
   <url><loc>https://gopheratlas.com/tags/web-performance</loc></url>
-  <url><loc>https://gopheratlas.com/tags/allocation</loc></url>
+  <url><loc>https://gopheratlas.com/tags/concurrency</loc></url>
+  <url><loc>https://gopheratlas.com/tags/gc</loc></url>
   <url><loc>https://gopheratlas.com/tags/gin</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-26</loc></url>
   <url><loc>https://gopheratlas.com/tags/http2</loc></url>
+  <url><loc>https://gopheratlas.com/tags/http3</loc></url>
+  <url><loc>https://gopheratlas.com/tags/library</loc></url>
   <url><loc>https://gopheratlas.com/tags/reverse-proxy</loc></url>
-  <url><loc>https://gopheratlas.com/tags/runtime</loc></url>
   <url><loc>https://gopheratlas.com/tags/s3</loc></url>
   <url><loc>https://gopheratlas.com/tags/saturation</loc></url>
-  <url><loc>https://gopheratlas.com/tags/selection</loc></url>
   <url><loc>https://gopheratlas.com/tags/web-server</loc></url>
   <url><loc>https://gopheratlas.com/tags/apache</loc></url>
+  <url><loc>https://gopheratlas.com/tags/apex-log</loc></url>
   <url><loc>https://gopheratlas.com/tags/api</loc></url>
   <url><loc>https://gopheratlas.com/tags/append</loc></url>
   <url><loc>https://gopheratlas.com/tags/availability</loc></url>
+  <url><loc>https://gopheratlas.com/tags/builder</loc></url>
   <url><loc>https://gopheratlas.com/tags/cache</loc></url>
   <url><loc>https://gopheratlas.com/tags/caddy</loc></url>
   <url><loc>https://gopheratlas.com/tags/clusterip</loc></url>
   <url><loc>https://gopheratlas.com/tags/compiler</loc></url>
+  <url><loc>https://gopheratlas.com/tags/coregex</loc></url>
   <url><loc>https://gopheratlas.com/tags/cpu-throttling</loc></url>
   <url><loc>https://gopheratlas.com/tags/csharp</loc></url>
   <url><loc>https://gopheratlas.com/tags/database</loc></url>
+  <url><loc>https://gopheratlas.com/tags/deadlock</loc></url>
+  <url><loc>https://gopheratlas.com/tags/debugging</loc></url>
   <url><loc>https://gopheratlas.com/tags/deployment</loc></url>
   <url><loc>https://gopheratlas.com/tags/diagnostics</loc></url>
   <url><loc>https://gopheratlas.com/tags/dotnet</loc></url>
   <url><loc>https://gopheratlas.com/tags/echo</loc></url>
   <url><loc>https://gopheratlas.com/tags/express</loc></url>
+  <url><loc>https://gopheratlas.com/tags/flame-graph</loc></url>
   <url><loc>https://gopheratlas.com/tags/flask</loc></url>
   <url><loc>https://gopheratlas.com/tags/flight-recorder</loc></url>
-  <url><loc>https://gopheratlas.com/tags/gc</loc></url>
+  <url><loc>https://gopheratlas.com/tags/generics</loc></url>
   <url><loc>https://gopheratlas.com/tags/gnet</loc></url>
   <url><loc>https://gopheratlas.com/tags/go1-18</loc></url>
+  <url><loc>https://gopheratlas.com/tags/go1-27</loc></url>
+  <url><loc>https://gopheratlas.com/tags/godebug</loc></url>
   <url><loc>https://gopheratlas.com/tags/goframe</loc></url>
   <url><loc>https://gopheratlas.com/tags/graphql</loc></url>
   <url><loc>https://gopheratlas.com/tags/grpc</loc></url>
+  <url><loc>https://gopheratlas.com/tags/hash</loc></url>
   <url><loc>https://gopheratlas.com/tags/heap</loc></url>
   <url><loc>https://gopheratlas.com/tags/hertz</loc></url>
-  <url><loc>https://gopheratlas.com/tags/http3</loc></url>
   <url><loc>https://gopheratlas.com/tags/https</loc></url>
+  <url><loc>https://gopheratlas.com/tags/interview</loc></url>
   <url><loc>https://gopheratlas.com/tags/iris</loc></url>
   <url><loc>https://gopheratlas.com/tags/java</loc></url>
   <url><loc>https://gopheratlas.com/tags/kafka</loc></url>
   <url><loc>https://gopheratlas.com/tags/language-basics</loc></url>
   <url><loc>https://gopheratlas.com/tags/load-balancer</loc></url>
+  <url><loc>https://gopheratlas.com/tags/logging</loc></url>
+  <url><loc>https://gopheratlas.com/tags/logrus</loc></url>
+  <url><loc>https://gopheratlas.com/tags/map</loc></url>
   <url><loc>https://gopheratlas.com/tags/memcached</loc></url>
   <url><loc>https://gopheratlas.com/tags/messaging</loc></url>
   <url><loc>https://gopheratlas.com/tags/microservices</loc></url>
   <url><loc>https://gopheratlas.com/tags/middleware</loc></url>
   <url><loc>https://gopheratlas.com/tags/mtu</loc></url>
+  <url><loc>https://gopheratlas.com/tags/mutex</loc></url>
   <url><loc>https://gopheratlas.com/tags/mysql</loc></url>
   <url><loc>https://gopheratlas.com/tags/network</loc></url>
   <url><loc>https://gopheratlas.com/tags/nodejs</loc></url>
   <url><loc>https://gopheratlas.com/tags/observability</loc></url>
   <url><loc>https://gopheratlas.com/tags/opentelemetry</loc></url>
+  <url><loc>https://gopheratlas.com/tags/post-quantum-crypto</loc></url>
+  <url><loc>https://gopheratlas.com/tags/pprof</loc></url>
+  <url><loc>https://gopheratlas.com/tags/preview</loc></url>
   <url><loc>https://gopheratlas.com/tags/prometheus</loc></url>
   <url><loc>https://gopheratlas.com/tags/python</loc></url>
   <url><loc>https://gopheratlas.com/tags/quic</loc></url>
   <url><loc>https://gopheratlas.com/tags/rabbitmq</loc></url>
   <url><loc>https://gopheratlas.com/tags/rabbitmq-streams</loc></url>
+  <url><loc>https://gopheratlas.com/tags/race-detector</loc></url>
+  <url><loc>https://gopheratlas.com/tags/re2</loc></url>
   <url><loc>https://gopheratlas.com/tags/redis</loc></url>
+  <url><loc>https://gopheratlas.com/tags/regexp</loc></url>
   <url><loc>https://gopheratlas.com/tags/rest</loc></url>
   <url><loc>https://gopheratlas.com/tags/runtime-trace</loc></url>
   <url><loc>https://gopheratlas.com/tags/rust</loc></url>
+  <url><loc>https://gopheratlas.com/tags/rwmutex</loc></url>
+  <url><loc>https://gopheratlas.com/tags/simd</loc></url>
   <url><loc>https://gopheratlas.com/tags/slice</loc></url>
+  <url><loc>https://gopheratlas.com/tags/slog</loc></url>
   <url><loc>https://gopheratlas.com/tags/spring-boot</loc></url>
   <url><loc>https://gopheratlas.com/tags/stack</loc></url>
+  <url><loc>https://gopheratlas.com/tags/standard-library</loc></url>
   <url><loc>https://gopheratlas.com/tags/startup-time</loc></url>
+  <url><loc>https://gopheratlas.com/tags/strings</loc></url>
+  <url><loc>https://gopheratlas.com/tags/structured-logging</loc></url>
+  <url><loc>https://gopheratlas.com/tags/sync-map</loc></url>
   <url><loc>https://gopheratlas.com/tags/tcp</loc></url>
   <url><loc>https://gopheratlas.com/tags/udp</loc></url>
   <url><loc>https://gopheratlas.com/tags/vm</loc></url>
+  <url><loc>https://gopheratlas.com/tags/zap</loc></url>
+  <url><loc>https://gopheratlas.com/tags/zerolog</loc></url>
   <url><loc>https://gopheratlas.com/tags/zig</loc></url>
   <url><loc>https://gopheratlas.com/notes/cybersecurity/crs-for-fiber-service</loc></url>
 </urlset>

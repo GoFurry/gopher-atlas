@@ -71,6 +71,25 @@ type NoteGroupViewModel = {
   notes: NoteDocument[]
 }
 
+function buildTopicArticles(topic: TopicDocument, articles: ArticleItem[]): ArticleItem[] {
+  const articleMap = new Map(articles.map((article) => [article.id, article]))
+  const matchedByCategory = articles.filter((article) => getCategorySlug(article.category) === topic.slug)
+  const manualSelection = topic.readingOrder
+    .map((articleId) => articleMap.get(articleId))
+    .filter((article): article is ArticleItem => Boolean(article))
+  const ordered = [...manualSelection, ...matchedByCategory]
+  const seen = new Set<string>()
+
+  return ordered.filter((article) => {
+    if (seen.has(article.id)) {
+      return false
+    }
+
+    seen.add(article.id)
+    return true
+  })
+}
+
 const CURRENT_YEAR = new Date().getFullYear()
 const LOGO_SRC = '/src/static/images/logo.png'
 const LOGO_256_SRC = '/logo-256.png'
@@ -773,6 +792,10 @@ function renderTopicPage(topic: TopicViewModel) {
     .filter((article): article is ArticleItem => Boolean(article))
   const hasReadingOrder = readingOrderArticles.length > 0
   const readingOrderTotalPages = Math.max(1, Math.ceil(readingOrderArticles.length / readingOrderPageSize))
+  const categoryBackedArticle = topic.articles.find((article) => getCategorySlug(article.category) === topic.slug)
+  const topicFilterHref = categoryBackedArticle
+    ? `/articles/?category=${encodeURIComponent(categoryBackedArticle.category)}`
+    : '/articles/'
 
   return renderShell(
     {
@@ -786,7 +809,7 @@ function renderTopicPage(topic: TopicViewModel) {
           'Topic',
           escapeHtml(topic.title),
           escapeHtml(topic.summary),
-          `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="/articles/?category=${encodeURIComponent(topic.articles[0]?.category ?? topic.title)}">\u5728\u6587\u7ae0\u9875\u7b5b\u9009</a>
+          `<a class="${BUTTON_RECT_PRIMARY_CLASS}" href="${topicFilterHref}">\u5728\u6587\u7ae0\u9875\u67e5\u770b</a>
            <button class="${BUTTON_RECT_GHOST_CLASS}" type="button" data-copy-current-link>\u590d\u5236\u4e13\u9898\u94fe\u63a5</button>`
         )}
         <section class="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.78fr)]">
@@ -924,18 +947,34 @@ async function main() {
   const topicMap = new Map(topicDocuments.map((topic) => [topic.slug, topic]))
   const noteGroups = buildNoteGroups(notes)
 
-  const topicPages: TopicViewModel[] = TOPIC_CATEGORY_SLUGS.map((slug) => {
-    const topic = topicMap.get(slug)
-    if (!topic) {
+  for (const slug of TOPIC_CATEGORY_SLUGS) {
+    if (!topicMap.has(slug)) {
       throw new Error(`Missing topic document for slug: ${slug}`)
     }
+  }
 
-    const topicArticles = articles.filter((article) => getCategorySlug(article.category) === slug)
-    return {
+  const topicPages: TopicViewModel[] = [...topicDocuments]
+    .sort((left, right) => {
+      const leftIndex = TOPIC_CATEGORY_SLUGS.indexOf(left.slug as never)
+      const rightIndex = TOPIC_CATEGORY_SLUGS.indexOf(right.slug as never)
+
+      if (leftIndex !== -1 || rightIndex !== -1) {
+        if (leftIndex === -1) {
+          return 1
+        }
+        if (rightIndex === -1) {
+          return -1
+        }
+
+        return leftIndex - rightIndex
+      }
+
+      return left.title.localeCompare(right.title)
+    })
+    .map((topic) => ({
       ...topic,
-      articles: sortArticles(topicArticles, 'recommended')
-    }
-  })
+      articles: buildTopicArticles(topic, articles)
+    }))
 
   const allRoutes = ['/', '/articles/', '/topics/', '/notes/', '/about/', '/contribute/']
 
