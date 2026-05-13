@@ -1,9 +1,9 @@
 # GopherAtlas
 
-[![Deploy GopherAtlas](https://github.com/GoFurry/gopher-atlas/actions/workflows/deploy.yml/badge.svg)](https://github.com/GoFurry/gopher-atlas/actions/workflows/deploy.yml)
+[![Deploy GopherAtlas](https://github.com/gofurry/gopher-atlas/actions/workflows/deploy.yml/badge.svg)](https://github.com/gofurry/gopher-atlas/actions/workflows/deploy.yml)
 [![Live Site](https://img.shields.io/badge/Live-gopheratlas.com-0f766e?logo=googlechrome&logoColor=white)](https://gopheratlas.com)
 [![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222222?logo=github&logoColor=white)](https://pages.github.com/)
-[![License](https://img.shields.io/github/license/GoFurry/gopher-atlas)](./LICENSE)
+[![License](https://img.shields.io/github/license/gofurry/gopher-atlas)](./LICENSE)
 
 High-quality Go article curation, organized by topics, tags, filters, and recommendation ratings.
 
@@ -21,7 +21,7 @@ GopherAtlas 是一个面向 Go 开发者的高质量技术博客导航站，已�
 ## Live Release Snapshot
 
 - Production: [https://gopheratlas.com](https://gopheratlas.com)
-- Repository: [https://github.com/GoFurry/gopher-atlas](https://github.com/GoFurry/gopher-atlas)
+- Repository: [https://github.com/gofurry/gopher-atlas](https://github.com/gofurry/gopher-atlas)
 - Deployment: GitHub Pages
 - CI workflow: `Deploy GopherAtlas`
 

@@ -333,7 +333,7 @@ function renderFooter(pageId: string): string {
     <footer class="shrink-0 border-t border-[color:var(--line)]">
       <div class="${wrapperClass}">
         <div class="min-w-0 space-y-1.5">
-          <p class="text-sm text-[color:var(--text)]">Copyright ${CURRENT_YEAR} GoFurry</p>
+          <p class="text-sm text-[color:var(--text)]">Copyright ${CURRENT_YEAR} gofurry</p>
           <p class="text-sm text-[color:var(--text-muted)]">\u672c\u7f51\u7ad9\u5185\u5bb9\u91c7\u7528 CC-BY-NC 4.0 \u6388\u6743\u534f\u8bae</p>
         </div>
         <div class="space-y-1.5 text-left md:text-right">

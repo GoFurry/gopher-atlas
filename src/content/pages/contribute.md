@@ -188,7 +188,7 @@ description: 了解如何推荐文章、补全文章元数据，并通过 Issue 
 ---
 title: 这篇文章的标题
 description: 这篇文章的简短说明。
-author: GoFurry
+author: gofurry
 createdAt: 2026-04-21
 updatedAt: 2026-04-21
 group: 性能随记

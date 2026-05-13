@@ -1,7 +1,7 @@
 export const SITE_NAME = 'GopherAtlas'
 export const SITE_URL = 'https://gopheratlas.com'
 export const SITE_DESCRIPTION = '高质量 Go 技术文章精选导航，按专题、标签与评级整理的阅读地图。'
-export const GITHUB_URL = 'https://github.com/GoFurry/gopher-atlas'
+export const GITHUB_URL = 'https://github.com/gofurry/gopher-atlas'
 export const PAGE_SIZE = 12
 
 export const CATEGORY_ORDER = [
